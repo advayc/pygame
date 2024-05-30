@@ -16,9 +16,8 @@ background = pygame.Surface(screen.get_size()).convert()
 background.fill((0, 0, 0))
 
 
-bounce = pygame.mixer.Sound("Jingle.mp3") #used for a sound effect
+jingle = pygame.mixer.Sound("Jingle.mp3") #used for a sound effect
 pygame.mixer.music.set_volume(0.06)
-pygame.mixer.music.play(-1)
 
 clock = pygame.time.Clock()
 
