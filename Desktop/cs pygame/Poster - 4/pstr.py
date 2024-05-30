@@ -21,7 +21,6 @@ def gotoPage2(screen, background):
     image=pygame.image.load('eagle.webp')
     img = pygame.transform.scale(image, (222.25,222.25))
     img = img.convert()
-
     #                   what        color    where on bg    width
     pygame.draw.rect(background, (183, 252, 179),[90,350,100,35], 50)
     pygame.draw.rect(background, (183, 252, 179),[270,350,100,35], 50)
@@ -35,14 +34,12 @@ def gotoPage1(screen, background):
     image=pygame.image.load('bird.jpg')
     img=pygame.transform.scale(image, (320, 213))
     img = img.convert()
-
     #                   what        color    where on bg    width
     pygame.draw.rect(background, (255, 163, 163),[90,350,100,35], 50)
     pygame.draw.rect(background, (255, 163, 163),[270,350,100,35], 50)
     pygame.draw.rect(background, (255, 163, 163),[440,350,100,35], 50)
     screen.blit(background, (0, 0))
     screen.blit(img, (150, 25))
-
 
 pygame.init()
 size=(640,480)
