@@ -5,8 +5,9 @@ import sys
 pygame.init()
 
 screen = pygame.display.set_mode((640, 480))
-img = pygame.image.load("car.png").convert()
-
+img = pygame.image.load("dbird.jpg").convert()
+img=pygame.transform.scale(img, (293,195.3))
+background = pygame.Surface(screen.get_size()).convert()
 img_rect = img.get_rect()
 img_rect.center = (320, 240)
 
@@ -30,5 +31,6 @@ while True:
                 img_rect.x += 10
     
     screen.fill((255, 255, 255))
+    screen.blit(background, (0,0))
     screen.blit(img, img_rect)
     pygame.display.flip()
