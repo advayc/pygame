@@ -1,23 +1,25 @@
-# Main Function
+# flowcharts for ev repair
+
+## Main Function
 ```mermaid
 flowchart TD
-    main(Main Function) --> loading_screen
+    read_file[count=0] --> loading_screen
 ```
-# Loading Screen Function
+## Loading Screen Function
 ```mermaid
 flowchart TD
     loading_screen(Loading Screen) -->|Gradually increase x of car image| check_end{Check if car_rect.right >= screen_width}
     check_end -->|Yes| welcome
     check_end -->|No| loading_screen
 ```
-# Welcome Screen Function
+## Welcome Screen Function
 ```mermaid
 flowchart TD
     welcome(Welcome Screen) --> decision{Click on button}
     decision -->|Start| roadmap
     decision -->|Instructions| instructions
 ```
-# Instructions Function
+## Instructions Function
 ```mermaid
 flowchart TD
     instructions(Instructions) --> read_file[Read instructions.txt file]
@@ -26,7 +28,7 @@ flowchart TD
     go_back_button --> decision{Click on button}
     decision -->|Go Back| welcome
 ```
-# Roadmap Screen Function
+## Roadmap Screen Function
 ```mermaid
 flowchart TD
     roadmap(Roadmap Screen) --> decision{Current count}
@@ -37,7 +39,7 @@ flowchart TD
     decision -->|5| evfive
     decision -->|6| evsix
 ```
-# evone Function
+## evone Function
 ```mermaid
 flowchart TD
     evone(Evone) --> blit_track1[Blit track1 img]
@@ -46,7 +48,7 @@ flowchart TD
     check_position -->|Yes| activity_1
     check_position -->|No| evone
 ```
-# evtwo Function
+## evtwo Function
 ```mermaid
 flowchart TD
     evtwo(Evtwo) --> blit_track1[Blit track1 img]
@@ -55,7 +57,7 @@ flowchart TD
     check_position -->|Yes| activity_2
     check_position -->|No| evtwo
 ```
-# evthree Function
+## evthree Function
 ```mermaid
 flowchart TD
     evthree(Evthree) --> blit_track2[Blit track2 img]
@@ -64,7 +66,7 @@ flowchart TD
     check_position -->|Yes| activity_3
     check_position -->|No| evthree
 ```
-# evfour Function
+## evfour Function
 ```mermaid
 flowchart TD
     evfour(Evfour) --> blit_track2[Blit track2 img]
@@ -73,7 +75,7 @@ flowchart TD
     check_position -->|Yes| activity_4
     check_position -->|No| evfour
 ```
-# evfive Function
+## evfive Function
 ```mermaid
 flowchart TD
     evfive(Evfive) --> blit_track3[Blit track3 img]
@@ -82,7 +84,7 @@ flowchart TD
     check_position -->|Yes| activity_5
     check_position -->|No| evfive
 ```
-# evsix Function
+## evsix Function
 ```mermaid
 flowchart TD
     evsix(Evsix) --> blit_track3[Blit track3 img]
@@ -91,7 +93,7 @@ flowchart TD
     check_position -->|Yes| activity_6
     check_position -->|No| evsix
 ```
-# activity_1 Function
+## activity_1 Function
 
 ```mermaid
 flowchart TD
@@ -102,7 +104,7 @@ flowchart TD
     congratulations_1 --> roadmap
     retry_1 --> activity_1
 ```
-# activity_2 Function
+## activity_2 Function
 
 ```mermaid
 flowchart TD
@@ -113,7 +115,7 @@ flowchart TD
     congratulations_2 --> roadmap
     retry_2 --> activity_2
 ```
-# activity_3 Function
+## activity_3 Function
 
 ```mermaid
 flowchart TD
@@ -124,7 +126,7 @@ flowchart TD
     congratulations_3 --> roadmap
     retry_3 --> activity_3
 ```
-# activity_4 Function
+## activity_4 Function
 
 ```mermaid
 flowchart TD
@@ -135,7 +137,7 @@ flowchart TD
     congratulations_4 --> roadmap
     retry_4 --> activity_4
 ```
-# activity_5 Function
+## activity_5 Function
 
 ```mermaid
 flowchart TD
@@ -146,7 +148,7 @@ flowchart TD
     congratulations_5 --> roadmap
     retry_5 --> activity_5
 ```
-# activity_6 Function
+## activity_6 Function
 
 ```mermaid
 flowchart TD
@@ -157,7 +159,7 @@ flowchart TD
     finish_screen --> congratulations[Congratulations screen]
     retry_6 --> activity_6
   ```  
-# Finish Screen Function
+## Finish Screen Function
 
 ```mermaid
 flowchart TD
@@ -166,7 +168,7 @@ flowchart TD
     play_again_button --> decision{Click on button}
     decision -->|Yes| reset_game
 ```
-# Reset Game Function
+## Reset Game Function
 ```mermaid
 flowchart TD
     reset_game(Reset Game) --> reset_variables[Reset game variables]
