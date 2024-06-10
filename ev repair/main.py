@@ -39,13 +39,14 @@ crash_sound_played = False
 # State flag
 transition_complete = False
 
-def welcome():
+def welcome(): # advay
     screen.fill((0, 0, 0))
     pygame.display.flip()
 
-def loading():
+
+def loading(): # written by sohun
     global car_speed, car2_speed, text_alpha, text_direction, crash_sound_played, transition_complete
-        # im sorry ms quan i know we didn't learn this but it is so helpful here to organize our code pls dont fail us 
+        # im sorry ms quan i know we didn't learn this but it is so helpful here to organize our code pls dont fail us (advay)
     
     text_rect.y += text_speed * text_direction
 
