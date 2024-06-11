@@ -1,0 +1,31 @@
+Story:
+You are driving an electric car on self driving mode. 
+While on your street coming home a squirrel suddenly runs 
+in front of the car. 
+With your speedy reflexes you disengage autopilot and take
+control of the car.
+You swerve to the right straight into your neighbours tree.
+BOOM! CRASH!
+Your car is still running and ends up crashing again into your 
+neighbours house.
+BOOM! CRASH!
+Finally, at a stop, you contemplate ... aren't electric self 
+driving cars invincible?
+
+It is now your mission to repair your electric car and learn 
+the truths of self driving cars! 
+Collect all the parts and you will head back on the road
+knowing all about fsd!
+
+
+How to play?
+1. Move character with WASD or arrow keys!
+2. You're given a roadmap with the essential parts of electric cars! You have to get every part to finish the game!
+3. You're sent to a track, and your car has to stay on the track and go to EV Stations!
+4. Each EV station provides information about self driving cars.
+5. When touching the EV stations you will be sent to a lesson sector.
+6. After each lesson click the next button to go to the activity!
+7. Once you submit your answers for the activity, you will be redirected to a page depending on your answer.
+8. If you are wrong you will have to answer another question.
+9. Make sure to not hit the barriers ... your car is already broken!
+6. Continue this process to collect every part!!
