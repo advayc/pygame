@@ -126,7 +126,7 @@ def roadmap():  # jack, advay
     pygame.draw.rect(screen, (255, 255, 255), [115, 345, 160, 160], 75)
     pygame.draw.rect(screen, (255, 255, 255), [515, 345, 160, 160], 75)
 
-    image = pygame.image.load("carsensor.png")
+    image = pygame.image.load("sensor.png")
     img = pygame.transform.scale(image, (150, 150))
     img = img.convert()
     screen.blit(img, (120, 100))
@@ -206,4 +206,12 @@ while True:
 
     if page == 0:
         loading()
-    elif page == 
+    elif page == 1:
+        if transition_complete:
+            page = 2
+        else:
+            loading()
+    elif page == 2:
+        welcome()
+    elif page == 3:
+        roadmap()
