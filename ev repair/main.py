@@ -2,8 +2,8 @@ import pygame, sys
 from pygame.locals import QUIT
 
 pygame.init()
-screen_width = 850
-screen_height = 500
+screen_width = 800
+screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Animation Beginning")
 page = 0
@@ -206,12 +206,4 @@ while True:
 
     if page == 0:
         loading()
-    elif page == 1:
-        if transition_complete:
-            page = 2
-        else:
-            loading()
-    elif page == 2:
-        welcome()
-    elif page == 3:
-        roadmap()
+    elif page == 
