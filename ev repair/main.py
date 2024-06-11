@@ -2,18 +2,19 @@ import pygame, sys
 from pygame.locals import QUIT
 
 pygame.init()
-screen_width = 800
-screen_height = 600
+screen_width = 850
+screen_height = 500
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Animation Beginning")
-page=0
+page = 0
+
 # Load images
 car = pygame.image.load("car.png")
 car_image = pygame.transform.scale(car, (140, 90))
 car_rect = car_image.get_rect()
 car_rect.x = -25
 car_rect.y = 400
-car_speed = 23670
+car_speed = 2
 
 car2 = pygame.image.load("car2.png")
 car2_image = pygame.transform.scale(car2, (140, 90))
@@ -35,41 +36,35 @@ text_direction = 1
 # Background Sound
 bg_sound = pygame.mixer.Sound("sound.mp3")
 bg_sound.play(-1)  # Play the background sound in a loop
+
 # Sound setup
 crash = pygame.mixer.Sound("crash.mp3")
 crash_sound_played = False
 transition_complete = False
 
-def welcome(): # sohun + advay changed font + made outline
+def welcome():  # sohun + advay changed font + made outline
     global page
-    page = 2
     # Text setup
     my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 125)
     text = my_font.render('EV REPAIR', True, (255, 255, 255))
     text_rect = text.get_rect(center=(400, 150))
-    screen.fill((40,40,40))
+    screen.fill((40, 40, 40))
 
     # Render the outline
     for x in range(-3, 4):
         for y in range(-3, 4):
-            outline = my_font.render('EV REPAIR', True, (0,0,0))
+            outline = my_font.render('EV REPAIR', True, (0, 0, 0))
             screen.blit(outline, (text_rect.x + x, text_rect.y + y))
 
-    
     # Draw Rectangle for Start
-    # Rect(left, top, width, height)
-    # what color where on bg width
-   
-    # Start rect, text
-    pygame.draw.rect(screen, (0, 0, 0),[50,350,250,100], 250)
+    pygame.draw.rect(screen, (0, 0, 0), [50, 350, 250, 100], 250)
     my_font2 = pygame.font.Font('FrancoisOne-Regular.ttf', 70)
     text2 = my_font2.render('Start', True, (255, 255, 255))
     text2_rect = text2.get_rect(center=(175, 400))
     screen.blit(text2, text2_rect)
-    # rect (color), [left, top, width, height],
 
     # Instructions rect, text
-    pygame.draw.rect(screen, (0, 0, 0),[350,350,400,100], 0)
+    pygame.draw.rect(screen, (0, 0, 0), [350, 350, 400, 100], 0)
     text3 = my_font2.render('Instructions', True, (255, 255, 255))
     text3_rect = text3.get_rect(center=(550, 400))
     screen.blit(text3, text3_rect)
@@ -78,13 +73,12 @@ def welcome(): # sohun + advay changed font + made outline
     screen.blit(text, text_rect)
     pygame.display.flip()
 
-def loading(): # sohun + advay
+def loading():  # sohun + advay
     global page, car_speed, car2_speed, text_alpha, text_direction, crash_sound_played, transition_complete
-        # im sorry ms quan i know we didn't learn this but it is so helpful here to organize our code pls dont fail us 
     page = 1
     text_rect.y += text_speed * text_direction
 
-    # Move the cars based off car speed 
+    # Move the cars based on car speed 
     car_rect.x += car_speed
     car2_rect.x -= car2_speed
 
@@ -109,7 +103,7 @@ def loading(): # sohun + advay
     text.set_alpha(text_alpha)
 
     # Draw everything
-    screen.fill((40,40,40))
+    screen.fill((40, 40, 40))
     screen.blit(text, text_rect)
     screen.blit(car_image, car_rect)
     screen.blit(car2_image, car2_rect)
@@ -122,24 +116,21 @@ def loading(): # sohun + advay
         car2_rect.x += 2
         pygame.display.flip()
 
-def roadmap(): # jack, advay
-    global screen
+def roadmap():  # jack, advay
     screen.fill((0, 0, 0))
 
-    pygame.draw.rect(screen, (255, 255, 255),[315,95,160,160], 75)
-    pygame.draw.rect(screen, (255, 255, 255),[115,95,160,160], 75)
-    pygame.draw.rect(screen, (255, 255, 255),[515,95,160,160], 75)
-    pygame.draw.rect(screen, (255, 255, 255),[315,345,160,160], 75)
-    pygame.draw.rect(screen, (255, 255, 255),[115,345,160,160], 75)
-    pygame.draw.rect(screen, (255, 255, 255),[515,345,160,160], 75)
-
-    screen.blit(screen, (0, 0))
+    pygame.draw.rect(screen, (255, 255, 255), [315, 95, 160, 160], 75)
+    pygame.draw.rect(screen, (255, 255, 255), [115, 95, 160, 160], 75)
+    pygame.draw.rect(screen, (255, 255, 255), [515, 95, 160, 160], 75)
+    pygame.draw.rect(screen, (255, 255, 255), [315, 345, 160, 160], 75)
+    pygame.draw.rect(screen, (255, 255, 255), [115, 345, 160, 160], 75)
+    pygame.draw.rect(screen, (255, 255, 255), [515, 345, 160, 160], 75)
 
     image = pygame.image.load("carsensor.png")
     img = pygame.transform.scale(image, (150, 150))
     img = img.convert()
     screen.blit(img, (120, 100))
-        
+
     image2 = pygame.image.load("carcam.png")
     img2 = pygame.transform.scale(image2, (150, 150))
     img2 = img2.convert()
@@ -166,43 +157,39 @@ def roadmap(): # jack, advay
     screen.blit(img6, (520, 350))
 
     myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
-    label = myfont.render("Sensors", True, (255,255,255))
+    label = myfont.render("Sensors", True, (255, 255, 255))
     screen.blit(label, (145, 260))
 
-    myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
-    label = myfont.render("Cameras", True, (255,255,255))
+    label = myfont.render("Cameras", True, (255, 255, 255))
     screen.blit(label, (345, 260))
 
-    myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
-    label = myfont.render("Motor", True, (255,255,255))
+    label = myfont.render("Motor", True, (255, 255, 255))
     screen.blit(label, (550, 260))
 
-    myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
-    label = myfont.render("Battery", True, (255,255,255))
+    label = myfont.render("Battery", True, (255, 255, 255))
     screen.blit(label, (145, 510))
 
-    myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
-    label = myfont.render("Cooling", True, (255,255,255))
+    label = myfont.render("Cooling", True, (255, 255, 255))
     screen.blit(label, (345, 510))
 
-    myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
-    label = myfont.render("Charger", True, (255,255,255))
+    label = myfont.render("Charger", True, (255, 255, 255))
     screen.blit(label, (545, 510))
 
-    myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 20)
-    label = myfont.render("Part = Level", True, (255,255,255))
+    label = myfont.render("Part = Level", True, (255, 255, 255))
     screen.blit(label, (350, 560))
 
-    myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 40)
-    label = myfont.render("Parts: ", True, (255,255,255))
+    label = myfont.render("Parts: ", True, (255, 255, 255))
     screen.blit(label, (75, 30))
 
     myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 50)
-    label = myfont.render("Part List", True, (255,255,255))
+    label = myfont.render("Part List", True, (255, 255, 255))
     screen.blit(label, (320, 20))
 
+    pygame.display.flip()
+
 while True:
-    clock.tick(60)        
+    clock.tick(60)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -212,14 +199,19 @@ while True:
             x = event.pos[0]
             y = event.pos[1]
             if page == 2 and x > 50 and x < 300 and y > 350 and y < 450: 
-# go to roadmap page when clicked on start button and when on welcome page
-                roadmap()
+                # go to roadmap page when clicked on start button and when on welcome page
+                page = 3
             if page == 2 and x > 350 and x < 770 and y > 350 and y < 450:
                 print('instruct')
-    
-    if not transition_complete:
-        # Move the text
-        loading()
-    else:
-        welcome()  # Transition to the next screen
 
+    if page == 0:
+        loading()
+    elif page == 1:
+        if transition_complete:
+            page = 2
+        else:
+            loading()
+    elif page == 2:
+        welcome()
+    elif page == 3:
+        roadmap()
