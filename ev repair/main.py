@@ -231,12 +231,12 @@ def track1():
     screen.blit(lab, lab_rect)
 
     # dis allowed track sections
-    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,131], 75)
-    bound2 = pygame.draw.rect(screen, (0,0,0), [339,120,476,120], 75)
-    bound3 = pygame.draw.rect(screen, (0,0,0), [340,0,122,420], 75)
-    bound4 = pygame.draw.rect(screen, (0,0,0), [0,515,800,100], 75)
-    bound5 = pygame.draw.rect(screen, (0,0,0), [0,240,203,350], 110)
-    bound6 = pygame.draw.rect(screen, (0,0,0), [587,370,250,350], 110)
+    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,131], 0)
+    bound2 = pygame.draw.rect(screen, (0,0,0), [339,120,476,120], 0)
+    bound3 = pygame.draw.rect(screen, (0,0,0), [340,0,122,420], 0)
+    bound4 = pygame.draw.rect(screen, (0,0,0), [0,515,800,100], 0)
+    bound5 = pygame.draw.rect(screen, (0,0,0), [0,240,203,350], 0)
+    bound6 = pygame.draw.rect(screen, (0,0,0), [587,370,250,350], 0)
 
     pygame.display.flip()
 
@@ -258,14 +258,19 @@ def track2():
     screen.blit(lab, lab_rect)
 
     # dis allowed track sections
-    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,84], 75)
-    bound2 = pygame.draw.rect(screen, (0,0,0), [0,0,126,176], 75)
-    bound3 = pygame.draw.rect(screen, (0,0,0), [461,0,500,209], 120)
-    bound4 = pygame.draw.rect(screen, (0,0,0), [461,0,24,407], 120)
-    bound5 = pygame.draw.rect(screen, (0,0,0), [0,0,332,17], 75)
-
+    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,84], 0)
+    bound2 = pygame.draw.rect(screen, (0,0,0), [0,0,126,176], 0)
+    bound3 = pygame.draw.rect(screen, (0,0,0), [461,0,500,209], 0)
+    bound4 = pygame.draw.rect(screen, (0,0,0), [461,0,24,407], 0)
+    bound5 = pygame.draw.rect(screen, (0,0,0), [0,283,332,18], 0)
+    bound6 = pygame.draw.rect(screen, (0,0,0), [236,193,96,95], 0)
+    bound7 = pygame.draw.rect(screen, (0,0,0), [0,283,102,318], 0)
+    bound8 = pygame.draw.rect(screen, (0,0,0), [0,506,800,170], 0)
+    bound9 = pygame.draw.rect(screen, (0,0,0), [607,344,800,400], 0)
 
     pygame.display.flip()
+
+
 
 while True:
     clock.tick(60)
