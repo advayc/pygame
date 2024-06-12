@@ -5,7 +5,7 @@ pygame.init()
 screen_width = 800
 screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Animation Beginning")
+pygame.display.set_caption("EV REPAIR")
 page = 0
 
 # Load images
