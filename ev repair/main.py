@@ -214,6 +214,7 @@ def roadmap():
     pygame.display.flip()
 
 def track1():
+    global page
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (0,0,0), [1, 152, 0,0], 75)
     track1 = pygame.image.load("track1.png")
@@ -230,14 +231,38 @@ def track1():
     screen.blit(lab, lab_rect)
 
     # dis allowed track sections
-    bruh = pygame.draw.rect(screen, (0,0,0), [0,0,800,131], 75)
-    pygame.draw.rect(screen, (0,0,0), [339,120,476,120], 75)
-    pygame.draw.rect(screen, (0,0,0), [340,0,122,420], 75)
-    pygame.draw.rect(screen, (0,0,0), [0,515,800,100], 75)
-    pygame.draw.rect(screen, (0,0,0), [0,240,203,350], 110)
-    pygame.draw.rect(screen, (0,0,0), [587,370,250,350], 110)
+    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,131], 75)
+    bound2 = pygame.draw.rect(screen, (0,0,0), [339,120,476,120], 75)
+    bound3 = pygame.draw.rect(screen, (0,0,0), [340,0,122,420], 75)
+    bound4 = pygame.draw.rect(screen, (0,0,0), [0,515,800,100], 75)
+    bound5 = pygame.draw.rect(screen, (0,0,0), [0,240,203,350], 110)
+    bound6 = pygame.draw.rect(screen, (0,0,0), [587,370,250,350], 110)
 
+    pygame.display.flip()
 
+def track2():
+    global page
+    screen.fill((0, 0, 0))
+    pygame.draw.rect(screen, (0,0,0), [1, 152, 0,0], 75)
+    track1 = pygame.image.load("track2.png")
+    track1 = track1.convert()
+    screen.blit(track1, (0, 0))
+
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
+    lab = f.render('back', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 50))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+    screen.blit(lab, lab_rect)
+
+    # dis allowed track sections
+    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,84], 75)
+    bound2 = pygame.draw.rect(screen, (0,0,0), [0,0,126,176], 75)
+    bound3 = pygame.draw.rect(screen, (0,0,0), [461,0,500,209], 120)
+    bound4 = pygame.draw.rect(screen, (0,0,0), [461,0,24,407], 120)
+    bound5 = pygame.draw.rect(screen, (0,0,0), [0,0,332,17], 75)
 
 
     pygame.display.flip()
@@ -275,4 +300,4 @@ while True:
     elif page == 3:
         roadmap()
     elif page == 4:
-        track1()
+        track2()
