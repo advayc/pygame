@@ -3,7 +3,7 @@ from pygame.locals import QUIT
 
 pygame.init()
 screen_width = 800
-screen_height = 600
+screen_height = 650
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("EV REPAIR")
 page = 0
@@ -42,9 +42,8 @@ crash = pygame.mixer.Sound("crash.mp3")
 crash_sound_played = False
 transition_complete = False
 
-def welcome():  # sohun + advay changed font + made outline
+def welcome():
     global page
-    # Text setup
     my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 125)
     text = my_font.render('EV REPAIR', True, (255, 255, 255))
     text_rect = text.get_rect(center=(400, 150))
@@ -69,11 +68,20 @@ def welcome():  # sohun + advay changed font + made outline
     text3_rect = text3.get_rect(center=(550, 400))
     screen.blit(text3, text3_rect)
 
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
+    lab = f.render('back', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 50))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+    screen.blit(lab, lab_rect)
+    
     # Render the text
     screen.blit(text, text_rect)
     pygame.display.flip()
 
-def loading():  # sohun + advay
+def loading():
     global page, car_speed, car2_speed, text_alpha, text_direction, crash_sound_played, transition_complete
     page = 1
     text_rect.y += text_speed * text_direction
@@ -88,7 +96,6 @@ def loading():  # sohun + advay
 
     # Check for collision between the cars
     if car_rect.colliderect(car2_rect):
-        # Stop the cars
         if text_alpha > 0:
             text_alpha -= 5  # Decrease the alpha value to fade out the text
         else:
@@ -107,6 +114,16 @@ def loading():  # sohun + advay
     screen.blit(text, text_rect)
     screen.blit(car_image, car_rect)
     screen.blit(car2_image, car2_rect)
+
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
+    lab = f.render('back', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 50))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+    screen.blit(lab, lab_rect)
+    
     pygame.display.flip()
 
     if car_rect.right > 415:
@@ -116,7 +133,7 @@ def loading():  # sohun + advay
         car2_rect.x += 2
         pygame.display.flip()
 
-def roadmap():  # jack, advay
+def roadmap():
     screen.fill((0, 0, 0))
 
     pygame.draw.rect(screen, (255, 255, 255), [315, 95, 160, 160], 75)
@@ -185,6 +202,32 @@ def roadmap():  # jack, advay
     label = myfont.render("Part List", True, (255, 255, 255))
     screen.blit(label, (320, 20))
 
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
+    lab = f.render('back', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 50))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+    screen.blit(lab, lab_rect)
+    
+    pygame.display.flip()
+
+def track1():
+    screen.fill((0, 0, 0))
+    track1 = pygame.image.load("track1.png")
+    track1 = track1.convert()
+    screen.blit(track1, (0, 0))
+
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
+    lab = f.render('back', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 50))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+    screen.blit(lab, lab_rect)
+    
     pygame.display.flip()
 
 while True:
@@ -198,9 +241,12 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             x = event.pos[0]
             y = event.pos[1]
+            if x > 675 and x < 750 and y > 25 and y < 75:  # Adjusted coordinates for "back" button
+                page -= 1 # back button
             if page == 2 and x > 50 and x < 300 and y > 350 and y < 450: 
-                # go to roadmap page when clicked on start button and when on welcome page
                 page = 3
+            if page == 3 and x > 100 and x < 300 and y > 100 and y < 260:
+                page = 4
             if page == 2 and x > 350 and x < 770 and y > 350 and y < 450:
                 print('instruct')
 
@@ -215,3 +261,5 @@ while True:
         welcome()
     elif page == 3:
         roadmap()
+    elif page == 4:
+        track1()
