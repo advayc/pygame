@@ -215,6 +215,7 @@ def roadmap():
 
 def track1():
     screen.fill((0, 0, 0))
+    pygame.draw.rect(screen, (0,0,0), [1, 152, 0,0], 75)
     track1 = pygame.image.load("track1.png")
     track1 = track1.convert()
     screen.blit(track1, (0, 0))
@@ -227,7 +228,18 @@ def track1():
         for y in range(-1, 2):
             screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
     screen.blit(lab, lab_rect)
-    
+
+    # dis allowed track sections
+    bruh = pygame.draw.rect(screen, (0,0,0), [0,0,800,131], 75)
+    pygame.draw.rect(screen, (0,0,0), [339,120,476,120], 75)
+    pygame.draw.rect(screen, (0,0,0), [340,0,122,420], 75)
+    pygame.draw.rect(screen, (0,0,0), [0,515,800,100], 75)
+    pygame.draw.rect(screen, (0,0,0), [0,240,203,350], 110)
+    pygame.draw.rect(screen, (0,0,0), [587,370,250,350], 110)
+
+
+
+
     pygame.display.flip()
 
 while True:
@@ -241,6 +253,7 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             x = event.pos[0]
             y = event.pos[1]
+            print(x,y)
             if x > 675 and x < 750 and y > 25 and y < 75:  # Adjusted coordinates for "back" button
                 page -= 1 # back button
             if page == 2 and x > 50 and x < 300 and y > 350 and y < 450: 
