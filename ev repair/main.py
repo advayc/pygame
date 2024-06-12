@@ -270,6 +270,33 @@ def track2():
 
     pygame.display.flip()
 
+def track3():
+    global page
+    screen.fill((0, 0, 0))
+    pygame.draw.rect(screen, (0,0,0), [1, 152, 0,0], 75)
+    track1 = pygame.image.load("track3.png")
+    track1 = track1.convert()
+    screen.blit(track1, (0, 0))
+
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
+    lab = f.render('back', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 50))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+    screen.blit(lab, lab_rect)
+
+    # dis allowed track sections
+    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,107], 0)
+    bound2 = pygame.draw.rect(screen, (0,0,0), [250,106,349,109], 0)
+    bound3 = pygame.draw.rect(screen, (0,0,0), [250,106,211,275], 0)
+
+
+    bound6 = pygame.draw.rect(screen, (0,0,0), [0,493,800,200], 0)
+
+
+    pygame.display.flip()
 
 
 while True:
@@ -305,4 +332,4 @@ while True:
     elif page == 3:
         roadmap()
     elif page == 4:
-        track2()
+        track3()
