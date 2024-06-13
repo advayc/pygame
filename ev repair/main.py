@@ -14,7 +14,7 @@ car_image = pygame.transform.scale(car, (130, 100))
 car_rect = car_image.get_rect()
 car_rect.x = 20
 car_rect.y = 480
-car_speed = 15
+car_speed = 25
 
 dc = pygame.image.load('car.png')
 drive_car_rect = dc.get_rect()
@@ -242,10 +242,15 @@ def roadmap():
 def track1():
     global drive_car, drive_car_rect
     screen.fill((0, 0, 0))
-    pygame.draw.rect(screen, (0,0,0), [1, 152, 0,0], 75)
-    track1 = pygame.image.load("track1.png")
-    track1 = track1.convert()
-    screen.blit(track1, (0, 0))
+    track1back = pygame.image.load("track1back.png")
+    track1back = track1back.convert()
+    screen.blit(track1back, (0, 0))
+
+    # Load and blit the overlay image
+    track1face = pygame.image.load("track1face.png")
+    track1face = track1face.convert_alpha()  
+    screen.blit(track1face, (0, 175))
+
     screen.blit(drive_car, drive_car_rect)
 
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
@@ -257,35 +262,21 @@ def track1():
             screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
     screen.blit(lab, lab_rect)
 
-    # Define allowed track sections
-    bound1 = pygame.Rect(0, 0, 800, 176)
-    bound2 = pygame.Rect(339, 120, 476, 120)
-    bound3 = pygame.Rect(340, 0, 122, 420)
-    bound4 = pygame.Rect(0, 515, 800, 100)
-    bound5 = pygame.Rect(0, 280, 203, 350)
-    bound6 = pygame.Rect(587, 370, 250, 350)
-
-    # Check collision with each bound
-    if drive_car_rect.colliderect(bound1) or \
-       drive_car_rect.colliderect(bound2) or \
-       drive_car_rect.colliderect(bound3) or \
-       drive_car_rect.colliderect(bound4) or \
-       drive_car_rect.colliderect(bound5) or \
-       drive_car_rect.colliderect(bound6):
-        drive_car_rect.x = 20
-        drive_car_rect.y = 210
-
     pygame.display.flip()
 
-# Repeat similar modifications for track2 and track3 functions
 
 def track2():
     global drive_car, drive_car_rect
     screen.fill((0, 0, 0))
-    pygame.draw.rect(screen, (0,0,0), [1, 152, 0,0], 75)
-    track1 = pygame.image.load("track2.png")
-    track1 = track1.convert()
-    screen.blit(track1, (0, 0))
+    track1back = pygame.image.load("track2back.png")
+    track1back = track1back.convert()
+    screen.blit(track1back, (0, 0))
+
+    # Load and blit the overlay image
+    track1face = pygame.image.load("track2face.png")
+    track1face = track1face.convert_alpha()  
+    screen.blit(track1face, (0, 85))
+
     screen.blit(drive_car, drive_car_rect)
     
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
@@ -297,39 +288,20 @@ def track2():
             screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
     screen.blit(lab, lab_rect)
 
-    # Define allowed track sections
-    bound1 = pygame.Rect(0, 0, 800, 84)
-    bound2 = pygame.Rect(0, 0, 126, 176)
-    bound3 = pygame.Rect(461, 0, 500, 209)
-    bound4 = pygame.Rect(461, 0, 24, 407)
-    bound5 = pygame.Rect(0, 283, 332, 18)
-    bound6 = pygame.Rect(236, 193, 96, 95)
-    bound7 = pygame.Rect(0, 283, 102, 318)
-    bound8 = pygame.Rect(0, 506, 800, 170)
-    bound9 = pygame.Rect(607, 344, 800, 400)
-
-    # Check collision with each bound
-    if drive_car_rect.colliderect(bound1) or \
-       drive_car_rect.colliderect(bound2) or \
-       drive_car_rect.colliderect(bound3) or \
-       drive_car_rect.colliderect(bound4) or \
-       drive_car_rect.colliderect(bound5) or \
-       drive_car_rect.colliderect(bound6) or \
-       drive_car_rect.colliderect(bound7) or \
-       drive_car_rect.colliderect(bound8) or \
-       drive_car_rect.colliderect(bound9):
-        drive_car_rect.x = 20
-        drive_car_rect.y = 210
-
     pygame.display.flip()
 
 def track3():
     global drive_car, drive_car_rect
     screen.fill((0, 0, 0))
-    pygame.draw.rect(screen, (0,0,0), [1, 152, 0,0], 75)
-    track1 = pygame.image.load("track3.png")
-    track1 = track1.convert()
-    screen.blit(track1, (0, 0))
+    track1back = pygame.image.load("track3back.png")
+    track1back = track1back.convert()
+    screen.blit(track1back, (0, 0))
+
+    # Load and blit the overlay image
+    track1face = pygame.image.load("track3face.png")
+    track1face = track1face.convert_alpha()  
+    screen.blit(track1face, (0, 100))
+
     screen.blit(drive_car, drive_car_rect)
 
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
@@ -341,28 +313,8 @@ def track3():
             screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
     screen.blit(lab, lab_rect)
 
-    # Define allowed track sections
-    bound1 = pygame.Rect(0, 0, 800, 107)
-    bound2 = pygame.Rect(250, 106, 349, 109)
-    bound3 = pygame.Rect(250, 106, 211, 275)
-    bound4 = pygame.Rect(0, 280, 105, 300)
-    bound5 = pygame.Rect(587, 344, 400, 300)
-    bound6 = pygame.Rect(723, 230, 400, 300)
-    bound7 = pygame.Rect(0, 492, 800, 200)
-    bound8 = pygame.Rect(0, 0, 300, 176)
-
+    end = pygame.draw.rect(screen, (255,0,0), [798,0,2,227])
     # Check collision with each bound
-    if drive_car_rect.colliderect(bound1) or \
-       drive_car_rect.colliderect(bound2) or \
-       drive_car_rect.colliderect(bound3) or \
-       drive_car_rect.colliderect(bound4) or \
-       drive_car_rect.colliderect(bound5) or \
-       drive_car_rect.colliderect(bound6) or \
-       drive_car_rect.colliderect(bound7) or \
-       drive_car_rect.colliderect(bound8):
-        drive_car_rect.x = 20
-        drive_car_rect.y = 210
-
     pygame.display.flip()
 
 while True:
@@ -377,44 +329,49 @@ while True:
             x = event.pos[0]
             y = event.pos[1]
             print(x,y)
-            #welcome screen
-            if page == 5 or page == 6 or page == 7 and x > 675 and x < 750 and y > 25 and y < 75: 
-                page = 4 # back button going to roadmap on tracks
+
+            if page == 5 or page == 6 or page == 7 and 675 < x < 750 and 25 < y < 75:
+                page = 4  # Go back to roadmap
                 drive_car_rect.x = 20
                 drive_car_rect.y = 210
-            elif page == 3 and x > 675 and x < 750 and y > 525 and y < 580:
-                page -= 1
-            elif page == 2 and x > 50 and x < 300 and y > 350 and y < 450: 
-                page = 4 # start button
-            elif page == 2 and x > 350 and x < 770 and y > 350 and y < 450:
-                page = 3 #instructions
-            # roadmap screen
-            elif page == 4 and x > 100 and x < 300 and y > 120 and y < 270: # brake 
-                page=5
-            elif page == 4 and x > 368 and x < 522 and y > 120 and y < 270: # cameras 
-                page=6
-            elif page == 4 and x > 600 and x < 748 and y > 120 and y < 270: # motor 
-                page=7
-            elif page == 4 and x > 70 and x < 220 and y > 370 and y < 519: # battery
-                page=6
-            elif page == 4 and x > 300 and x < 451 and y > 370 and y < 519: # controller
-                page=7
-            elif page == 4 and x > 530 and x < 680 and y > 370 and y < 519: # battery
-                page=5
-            if page == 3 and x > 650 and x < 810 and y > 10 and y < 90:
-                    if not audio_playing:  # If audio is not already playing
-                        instruction_sound.play()
-                        audio_playing = True  # Set the flag to True when audio starts playing
 
-    # Get the keys that are currently pressed
+            elif page == 3 and 675 < x < 750 and 525 < y < 580:
+                page = 2  # Go back to welcome screen
+
+            # Welcome screen buttons
+            elif page == 2:
+                if 50 < x < 300 and 350 < y < 450:
+                    page = 4  # Start button
+                elif 350 < x < 770 and 350 < y < 450:
+                    page = 3  # Instructions button
+
+            # Roadmap screen buttons
+            elif page == 4:
+                if 675 < x < 750 and 25 < y < 75:
+                    page = 2 # welcome page
+                elif 100 < x < 300 and 120 < y < 270:
+                    page = 5  # Brake
+                elif 368 < x < 522 and 120 < y < 270:
+                    page = 6  # Cameras
+                elif 600 < x < 748 and 120 < y < 270:
+                    page = 7  # Motor
+                elif 70 < x < 220 and 370 < y < 519:
+                    page = 6  # Battery
+                elif 300 < x < 451 and 370 < y < 519:
+                    page = 7  # Controller
+                elif 530 < x < 680 and 370 < y < 519:
+                    page = 5  # Charger
+
+            # Instruction screen
+            elif page == 3 and 650 < x < 810 and 10 < y < 90:
+                if not audio_playing:
+                    instruction_sound.play()
+                    audio_playing = True
+
+    # Arrow key controls
     keys = pygame.key.get_pressed()
-    # also i know we didn't learn this but i just found out about it and its helpful to allow for holding down controls
-    # holding down the arrow keys is particularly helpful in a racing game. (helps with user experience)
-    # holding down arrow keys is a lot more fun than having to click every time
-
-    # Move the car based on the arrow keys
     if keys[pygame.K_UP]:
-        drive_car_rect.y -= 2.5  #speed of the car
+        drive_car_rect.y -= 2.5
     if keys[pygame.K_DOWN]:
         drive_car_rect.y += 2.5
     if keys[pygame.K_LEFT]:
@@ -422,8 +379,9 @@ while True:
     if keys[pygame.K_RIGHT]:
         drive_car_rect.x += 2.5
 
-    screen.blit(drive_car, drive_car_rect)  # Draw the car on the screen
+    screen.blit(drive_car, drive_car_rect)
 
+    # Page rendering based on current page value
     if page == 0:
         loading()
     elif page == 1:
@@ -445,4 +403,3 @@ while True:
         track3()
 
     pygame.display.flip()
-
