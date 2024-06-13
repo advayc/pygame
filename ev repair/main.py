@@ -16,6 +16,12 @@ car_rect.x = 20
 car_rect.y = 480
 car_speed = 6
 
+dc = pygame.image.load('car.png')
+drive_car_rect = dc.get_rect()
+drive_car = pygame.transform.scale(dc, (71, 39)) # Scale the image to 50x50
+drive_car_rect.x = 11
+drive_car_rect.y = 160
+
 clock = pygame.time.Clock()
 
 # Text setup
@@ -181,12 +187,14 @@ def roadmap():
     pygame.display.flip()
 
 def track1():
-    global page
+    global drive_car, drive_car_rect
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (0,0,0), [1, 152, 0,0], 75)
     track1 = pygame.image.load("track1.png")
     track1 = track1.convert()
     screen.blit(track1, (0, 0))
+    screen.blit(drive_car, drive_car_rect)
+
 
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
     lab = f.render('back', True, (255, 255, 255))
@@ -208,7 +216,7 @@ def track1():
     pygame.display.flip()
 
 def track2():
-    global page
+    global drive_car, drive_car_rect
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (0,0,0), [1, 152, 0,0], 75)
     track1 = pygame.image.load("track2.png")
@@ -238,7 +246,7 @@ def track2():
     pygame.display.flip()
 
 def track3():
-    global page
+    global drive_car, drive_car_rect
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, (0,0,0), [1, 152, 0,0], 75)
     track1 = pygame.image.load("track3.png")
@@ -258,11 +266,12 @@ def track3():
     bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,107], 0)
     bound2 = pygame.draw.rect(screen, (0,0,0), [250,106,349,109], 0)
     bound3 = pygame.draw.rect(screen, (0,0,0), [250,106,211,275], 0)
-
-    bound6 = pygame.draw.rect(screen, (0,0,0), [0,493,800,200], 0)
+    bound4 = pygame.draw.rect(screen, (0,0,0), [0,214,105,300], 0)
+    bound5 = pygame.draw.rect(screen, (0,0,0), [587,344,400,300], 0)
+    bound6 = pygame.draw.rect(screen, (0,0,0), [723,230,400,300], 0)
+    bound7 = pygame.draw.rect(screen, (0,0,0), [0,492,800,200], 0)
 
     pygame.display.flip()
-
 
 while True:
     clock.tick(60)
@@ -279,11 +288,23 @@ while True:
             if x > 675 and x < 750 and y > 25 and y < 75:  # Adjusted coordinates for "back" button
                 page -= 1 # back button
             if page == 2 and x > 50 and x < 300 and y > 350 and y < 450: 
-                page = 3
-            if page == 3 and x > 100 and x < 300 and y > 100 and y < 260:
+                page = 3 # start button
+            if page == 3 and x > 100 and x < 300 and y > 100 and y < 260: # brake button
                 page = 4
             if page == 2 and x > 350 and x < 770 and y > 350 and y < 450:
                 print('instruct')
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                drive_car_rect.y -= 11 # speed of the car
+            elif event.key == pygame.K_DOWN:
+                drive_car_rect.y += 11 # speed of the car
+            elif event.key == pygame.K_LEFT:
+                drive_car_rect.x -= 11 # speed of the car
+            elif event.key == pygame.K_RIGHT:
+                drive_car_rect.x += 11 # speed of the car
+
+    screen.blit(drive_car, drive_car_rect)  # Draw the car on the screen
+
 
     if page == 0:
         loading()
@@ -297,4 +318,4 @@ while True:
     elif page == 3:
         roadmap()
     elif page == 4:
-        track3()
+        track1()
