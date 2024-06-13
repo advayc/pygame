@@ -123,10 +123,11 @@ def loading():
     
     pygame.display.flip()
 
+
 def roadmap():
     screen.fill((21, 21, 21))
 
-    # Drawing circles with labels
+    # Drawing circles with labels (increased resolution)
     pygame.draw.circle(screen, (197, 255, 248), (195, 195), 76)  # First circle
     pygame.draw.circle(screen, (255, 165, 165), (445, 195), 76)  # Second circle
     pygame.draw.circle(screen, (206, 255, 125), (675, 195), 76)  # Third circle
@@ -135,35 +136,35 @@ def roadmap():
     pygame.draw.circle(screen, (244, 244, 116), (605, 445), 76)  # Sixth circle
 
     # Font for labels
-    myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
+    myfont = pygame.font.Font("Inter.ttf", 30)
 
-   # Labels
-    label1 = myfont.render("Sensors", True, (0, 0, 0)) # First circle
+    # Labels
+    label1 = myfont.render("brake", True, (0, 0, 0))  # First circle
     label1_rect = label1.get_rect(center=(195, 195))
     screen.blit(label1, label1_rect)
 
-    label2 = myfont.render("Cameras", True, (0, 0, 0)) # Second circle
+    label2 = myfont.render("cameras", True, (0, 0, 0))  # Second circle
     label2_rect = label2.get_rect(center=(445, 195))
     screen.blit(label2, label2_rect)
 
-    label3 = myfont.render("Motor", True, (0, 0, 0)) # Third circle
+    label3 = myfont.render("motor", True, (0, 0, 0))  # Third circle
     label3_rect = label3.get_rect(center=(675, 195))
     screen.blit(label3, label3_rect)
 
-    label4 = myfont.render("Battery", True, (0, 0, 0)) # Fourth circle
+    label4 = myfont.render("battery", True, (0, 0, 0))  # Fourth circle
     label4_rect = label4.get_rect(center=(145, 445))
     screen.blit(label4, label4_rect)
 
-    label5 = myfont.render("Controller", True, (0, 0, 0)) # Fifth circle
+    label5 = myfont.render("controller", True, (0, 0, 0))  # Fifth circle
     label5_rect = label5.get_rect(center=(375, 445))
     screen.blit(label5, label5_rect)
 
-    label6 = myfont.render("Charger", True, (0, 0, 0)) # Sixth circle
+    label6 = myfont.render("charger", True, (0, 0, 0))  # Sixth circle
     label6_rect = label6.get_rect(center=(605, 445))
     screen.blit(label6, label6_rect)
 
     # Title
-    title_font = pygame.font.Font("FrancoisOne-Regular.ttf", 50)
+    title_font = pygame.font.Font("FrancoisOne-Regular.ttf", 45)
     title = title_font.render("Part List", True, (255, 255, 255))
     screen.blit(title, (320, 20))
 
@@ -176,7 +177,7 @@ def roadmap():
         for y in range(-1, 2):
             screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
     screen.blit(lab, lab_rect)
-    
+
     pygame.display.flip()
 
 def track1():
