@@ -14,7 +14,7 @@ car_image = pygame.transform.scale(car, (130, 100))
 car_rect = car_image.get_rect()
 car_rect.x = 20
 car_rect.y = 480
-car_speed = 8
+car_speed = 15
 
 dc = pygame.image.load('car.png')
 drive_car_rect = dc.get_rect()
@@ -23,6 +23,11 @@ drive_car_rect.x = 20
 drive_car_rect.y = 210
 clock = pygame.time.Clock()
 
+# Load Sounds
+bg_sound = pygame.mixer.Sound("sound.mp3")
+crash = pygame.mixer.Sound("crash.mp3")
+instruction_sound = pygame.mixer.Sound("narration.mp3")
+
 # Text setup
 my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 40)
 text = my_font.render('Loading...', True, (0, 0, 0))
@@ -30,58 +35,13 @@ text_rect = text.get_rect(center=(675, 575))
 text_alpha = 255  # Initial alpha value
 
 # Background Sound
-bg_sound = pygame.mixer.Sound("sound.mp3")
 bg_sound.play(-1)  # Play the background sound in a loop
 
-# Sound setup
-crash = pygame.mixer.Sound("crash.mp3")
 crash_sound_played = False
 transition_complete = False
 
-def welcome():
-    global page
-    my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 125)
-    text = my_font.render('EV REPAIR', True, (255, 255, 255))
-    text_rect = text.get_rect(center=(400, 150))
-    screen.fill((40, 40, 40))
-
-    # Render the outline
-    for x in range(-3, 4):
-        for y in range(-3, 4):
-            outline = my_font.render('EV REPAIR', True, (0, 0, 0))
-            screen.blit(outline, (text_rect.x + x, text_rect.y + y))
-    
-    # Checkered Background Opaque
-    checker_bg = pygame.image.load("checker.png")
-    checker = pygame.transform.scale(checker_bg, (800, 600))
-    checker.set_alpha(25)
-    screen.blit(checker, (0,0))
-    # Draw Rectangle for Start
-    pygame.draw.rect(screen, (0, 0, 0), [50, 350, 250, 100], 250)
-    my_font2 = pygame.font.Font('FrancoisOne-Regular.ttf', 70)
-    text2 = my_font2.render('Start', True, (255, 255, 255))
-    text2_rect = text2.get_rect(center=(175, 400))
-    screen.blit(text2, text2_rect)
-
-    # Instructions rect, text
-    pygame.draw.rect(screen, (0, 0, 0), [350, 350, 400, 100], 0)
-    text3 = my_font2.render('Instructions', True, (255, 255, 255))
-    text3_rect = text3.get_rect(center=(550, 400))
-    screen.blit(text3, text3_rect)
-
-    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
-    lab = f.render('back', True, (255, 255, 255))
-    lab_rect = lab.get_rect(center=(700, 50))
-
-    for x in range(-1, 2):
-        for y in range(-1, 2):
-            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
-    screen.blit(lab, lab_rect)
-    
-    # Render the text
-    screen.blit(text, text_rect)
-    pygame.display.flip()
-
+# Instruction Audio
+audio_playing = False
 def loading():
     global page, car_speed, text_alpha, crash_sound_played, transition_complete
     page = 1
@@ -128,7 +88,101 @@ def loading():
     
     pygame.display.flip()
 
+def welcome():
+    global page
+    my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 125)
+    text = my_font.render('EV REPAIR', True, (255, 255, 255))
+    text_rect = text.get_rect(center=(400, 150))
+    screen.fill((40, 40, 40))
 
+    # Render the outline
+    for x in range(-3, 4):
+        for y in range(-3, 4):
+            outline = my_font.render('EV REPAIR', True, (0, 0, 0))
+            screen.blit(outline, (text_rect.x + x, text_rect.y + y))
+    
+    # Checkered Background Opaque
+    checker_bg = pygame.image.load("checker.png")
+    checker = pygame.transform.scale(checker_bg, (800, 600))
+    checker.set_alpha(25)
+    screen.blit(checker, (0,0))
+    # Draw Rectangle for Start
+    pygame.draw.rect(screen, (0, 0, 0), [50, 350, 250, 100], 250)
+    my_font2 = pygame.font.Font('FrancoisOne-Regular.ttf', 70)
+    text2 = my_font2.render('Start', True, (255, 255, 255))
+    text2_rect = text2.get_rect(center=(175, 400))
+    screen.blit(text2, text2_rect)
+
+    # Instructions rect, text
+    pygame.draw.rect(screen, (0, 0, 0), [350, 350, 400, 100], 0)
+    text3 = my_font2.render('Instructions', True, (255, 255, 255))
+    text3_rect = text3.get_rect(center=(550, 400))
+    screen.blit(text3, text3_rect)
+
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
+    lab = f.render('back', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 50))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+    screen.blit(lab, lab_rect)
+    
+    # Render the text
+    screen.blit(text, text_rect)
+    pygame.display.flip()
+
+def instructions():
+    global page
+    screen.fill((205,205,205))
+    instruct_bg = pygame.image.load("instruct_bg.jpg")
+    instruct = pygame.transform.scale(instruct_bg, (800, 600))
+    instruct.set_alpha(15)
+    screen.blit(instruct, (0,0))
+    my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 65)
+    text = my_font.render('Instructions Page', True, (0, 0, 0))
+    text_rect = text.get_rect(center=(300, 40))
+    screen.blit(text, text_rect)
+    
+    diff_font = pygame.font.Font('FrancoisOne-Regular.ttf', 20)
+    text2 = diff_font.render('Read the Story FIRST!', True, (0, 0, 0))
+    text_rect2 = text2.get_rect(center=(700, 100))
+    screen.blit(text2, text_rect2)
+    # images
+    speaker = pygame.image.load("speaker.png")
+    speaker = pygame.transform.scale(speaker, (80, 80))
+    speaker_rect = speaker.get_rect(center=(710, 40))
+    screen.blit(speaker, speaker_rect)
+    a_font = pygame.font.SysFont('Georgia', 20)
+    # text
+    # Read the content from instructions.txt
+    content = open("instructions.txt", "r")
+    instructions_lines = content.readlines()
+    
+    # Render the instructions text
+    for i, line in enumerate(instructions_lines):
+        line = line.strip()  # Remove newline characters
+        line_text = a_font.render(line, True, (0, 0, 0))
+        line_rect = line_text.get_rect(topleft=(20, 100 + i * 50))
+        screen.blit(line_text, line_rect)
+    content.close()  # Close the file
+    
+    # "back" button
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 40)
+    lab = f.render('BACK', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 525))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('BACK', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+            
+    pygame.draw.circle(screen, (90, 90, 90), (700, 525), 50)  # First circle
+    screen.blit(lab, lab_rect)
+    
+    
+    pygame.display.flip()
+    
+    
 def roadmap():
     screen.fill((21, 21, 21))
 
@@ -184,7 +238,7 @@ def roadmap():
     screen.blit(lab, lab_rect)
 
     pygame.display.flip()
-
+    
 def track1():
     global drive_car, drive_car_rect
     screen.fill((0, 0, 0))
@@ -203,15 +257,27 @@ def track1():
             screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
     screen.blit(lab, lab_rect)
 
-    # dis allowed track sections
-    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,176], 0)
-    bound2 = pygame.draw.rect(screen, (0,0,0), [339,120,476,120], 0)
-    bound3 = pygame.draw.rect(screen, (0,0,0), [340,0,122,420], 0)
-    bound4 = pygame.draw.rect(screen, (0,0,0), [0,515,800,100], 0)
-    bound5 = pygame.draw.rect(screen, (0,0,0), [0,280,203,350], 0)
-    bound6 = pygame.draw.rect(screen, (0,0,0), [587,370,250,350], 0)
+    # Define allowed track sections
+    bound1 = pygame.Rect(0, 0, 800, 176)
+    bound2 = pygame.Rect(339, 120, 476, 120)
+    bound3 = pygame.Rect(340, 0, 122, 420)
+    bound4 = pygame.Rect(0, 515, 800, 100)
+    bound5 = pygame.Rect(0, 280, 203, 350)
+    bound6 = pygame.Rect(587, 370, 250, 350)
+
+    # Check collision with each bound
+    if drive_car_rect.colliderect(bound1) or \
+       drive_car_rect.colliderect(bound2) or \
+       drive_car_rect.colliderect(bound3) or \
+       drive_car_rect.colliderect(bound4) or \
+       drive_car_rect.colliderect(bound5) or \
+       drive_car_rect.colliderect(bound6):
+        drive_car_rect.x = 20
+        drive_car_rect.y = 210
 
     pygame.display.flip()
+
+# Repeat similar modifications for track2 and track3 functions
 
 def track2():
     global drive_car, drive_car_rect
@@ -231,16 +297,29 @@ def track2():
             screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
     screen.blit(lab, lab_rect)
 
-    # dis allowed track sections
-    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,84], 0)
-    bound2 = pygame.draw.rect(screen, (0,0,0), [0,0,126,176], 0)
-    bound3 = pygame.draw.rect(screen, (0,0,0), [461,0,500,209], 0)
-    bound4 = pygame.draw.rect(screen, (0,0,0), [461,0,24,407], 0)
-    bound5 = pygame.draw.rect(screen, (0,0,0), [0,283,332,18], 0)
-    bound6 = pygame.draw.rect(screen, (0,0,0), [236,193,96,95], 0)
-    bound7 = pygame.draw.rect(screen, (0,0,0), [0,283,102,318], 0)
-    bound8 = pygame.draw.rect(screen, (0,0,0), [0,506,800,170], 0)
-    bound9 = pygame.draw.rect(screen, (0,0,0), [607,344,800,400], 0)
+    # Define allowed track sections
+    bound1 = pygame.Rect(0, 0, 800, 84)
+    bound2 = pygame.Rect(0, 0, 126, 176)
+    bound3 = pygame.Rect(461, 0, 500, 209)
+    bound4 = pygame.Rect(461, 0, 24, 407)
+    bound5 = pygame.Rect(0, 283, 332, 18)
+    bound6 = pygame.Rect(236, 193, 96, 95)
+    bound7 = pygame.Rect(0, 283, 102, 318)
+    bound8 = pygame.Rect(0, 506, 800, 170)
+    bound9 = pygame.Rect(607, 344, 800, 400)
+
+    # Check collision with each bound
+    if drive_car_rect.colliderect(bound1) or \
+       drive_car_rect.colliderect(bound2) or \
+       drive_car_rect.colliderect(bound3) or \
+       drive_car_rect.colliderect(bound4) or \
+       drive_car_rect.colliderect(bound5) or \
+       drive_car_rect.colliderect(bound6) or \
+       drive_car_rect.colliderect(bound7) or \
+       drive_car_rect.colliderect(bound8) or \
+       drive_car_rect.colliderect(bound9):
+        drive_car_rect.x = 20
+        drive_car_rect.y = 210
 
     pygame.display.flip()
 
@@ -262,18 +341,29 @@ def track3():
             screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
     screen.blit(lab, lab_rect)
 
-    # dis allowed track sections
-    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,107], 0)
-    bound2 = pygame.draw.rect(screen, (0,0,0), [250,106,349,109], 0)
-    bound3 = pygame.draw.rect(screen, (0,0,0), [250,106,211,275], 0)
-    bound4 = pygame.draw.rect(screen, (0,0,0), [0,280,105,300], 0)
-    bound5 = pygame.draw.rect(screen, (0,0,0), [587,344,400,300], 0)
-    bound6 = pygame.draw.rect(screen, (0,0,0), [723,230,400,300], 0)
-    bound7 = pygame.draw.rect(screen, (0,0,0), [0,492,800,200], 0)
-    bound8 = pygame.draw.rect(screen, (0,0,0), [0,0,300,176], 0)
+    # Define allowed track sections
+    bound1 = pygame.Rect(0, 0, 800, 107)
+    bound2 = pygame.Rect(250, 106, 349, 109)
+    bound3 = pygame.Rect(250, 106, 211, 275)
+    bound4 = pygame.Rect(0, 280, 105, 300)
+    bound5 = pygame.Rect(587, 344, 400, 300)
+    bound6 = pygame.Rect(723, 230, 400, 300)
+    bound7 = pygame.Rect(0, 492, 800, 200)
+    bound8 = pygame.Rect(0, 0, 300, 176)
+
+    # Check collision with each bound
+    if drive_car_rect.colliderect(bound1) or \
+       drive_car_rect.colliderect(bound2) or \
+       drive_car_rect.colliderect(bound3) or \
+       drive_car_rect.colliderect(bound4) or \
+       drive_car_rect.colliderect(bound5) or \
+       drive_car_rect.colliderect(bound6) or \
+       drive_car_rect.colliderect(bound7) or \
+       drive_car_rect.colliderect(bound8):
+        drive_car_rect.x = 20
+        drive_car_rect.y = 210
 
     pygame.display.flip()
-
 
 while True:
     clock.tick(60)
@@ -288,29 +378,33 @@ while True:
             y = event.pos[1]
             print(x,y)
             #welcome screen
-            if x > 675 and x < 750 and y > 25 and y < 75:  # Adjusted coordinates for "back" button
-                page -= 1 # back button
+            if page == 5 or page == 6 or page == 7 and x > 675 and x < 750 and y > 25 and y < 75: 
+                page = 4 # back button going to roadmap on tracks
                 drive_car_rect.x = 20
                 drive_car_rect.y = 210
-
+            elif page == 3 and x > 675 and x < 750 and y > 525 and y < 580:
+                page -= 1
             elif page == 2 and x > 50 and x < 300 and y > 350 and y < 450: 
-                page = 3 # start button
+                page = 4 # start button
             elif page == 2 and x > 350 and x < 770 and y > 350 and y < 450:
-                print('instruct')
-
+                page = 3 #instructions
             # roadmap screen
-            elif page == 3 and x > 100 and x < 300 and y > 120 and y < 270: # brake 
-                page=4
-            elif page == 3 and x > 368 and x < 522 and y > 120 and y < 270: # cameras 
+            elif page == 4 and x > 100 and x < 300 and y > 120 and y < 270: # brake 
                 page=5
-            elif page == 3 and x > 600 and x < 748 and y > 120 and y < 270: # motor 
+            elif page == 4 and x > 368 and x < 522 and y > 120 and y < 270: # cameras 
                 page=6
-            elif page == 3 and x > 70 and x < 220 and y > 370 and y < 519: # battery
+            elif page == 4 and x > 600 and x < 748 and y > 120 and y < 270: # motor 
+                page=7
+            elif page == 4 and x > 70 and x < 220 and y > 370 and y < 519: # battery
+                page=6
+            elif page == 4 and x > 300 and x < 451 and y > 370 and y < 519: # controller
+                page=7
+            elif page == 4 and x > 530 and x < 680 and y > 370 and y < 519: # battery
                 page=5
-            elif page == 3 and x > 300 and x < 451 and y > 370 and y < 519: # controller
-                page=6
-            elif page == 3 and x > 530 and x < 680 and y > 370 and y < 519: # battery
-                page=4
+            if page == 3 and x > 650 and x < 810 and y > 10 and y < 90:
+                    if not audio_playing:  # If audio is not already playing
+                        instruction_sound.play()
+                        audio_playing = True  # Set the flag to True when audio starts playing
 
     # Get the keys that are currently pressed
     keys = pygame.key.get_pressed()
@@ -340,12 +434,15 @@ while True:
     elif page == 2:
         welcome()
     elif page == 3:
-        roadmap()
+        instructions()
     elif page == 4:
-        track1()
+        roadmap()
     elif page == 5:
-        track2()
+        track1()
     elif page == 6:
+        track2()
+    elif page == 7:
         track3()
 
     pygame.display.flip()
+
