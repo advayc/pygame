@@ -9,29 +9,20 @@ pygame.display.set_caption("EV REPAIR")
 page = 0
 
 # Load images
-car = pygame.image.load("car.png")
-car_image = pygame.transform.scale(car, (140, 90))
+car = pygame.image.load("car3.png")
+car_image = pygame.transform.scale(car, (130, 100))
 car_rect = car_image.get_rect()
-car_rect.x = -25
-car_rect.y = 400
-car_speed = 2
-
-car2 = pygame.image.load("car2.png")
-car2_image = pygame.transform.scale(car2, (140, 90))
-car2_rect = car2_image.get_rect()
-car2_rect.x = 700
-car2_rect.y = 400
-car2_speed = 2
+car_rect.x = 20
+car_rect.y = 480
+car_speed = 6
 
 clock = pygame.time.Clock()
 
 # Text setup
-my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 80)
-text = my_font.render('Loading...', True, (255, 0, 0))
-text_rect = text.get_rect(center=(400, 150))
+my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 40)
+text = my_font.render('Loading...', True, (0, 0, 0))
+text_rect = text.get_rect(center=(675, 575))
 text_alpha = 255  # Initial alpha value
-text_speed = 1
-text_direction = 1
 
 # Background Sound
 bg_sound = pygame.mixer.Sound("sound.mp3")
@@ -54,7 +45,12 @@ def welcome():
         for y in range(-3, 4):
             outline = my_font.render('EV REPAIR', True, (0, 0, 0))
             screen.blit(outline, (text_rect.x + x, text_rect.y + y))
-
+    
+    # Checkered Background Opaque
+    checker_bg = pygame.image.load("checker.png")
+    checker = pygame.transform.scale(checker_bg, (800, 600))
+    checker.set_alpha(25)
+    screen.blit(checker, (0,0))
     # Draw Rectangle for Start
     pygame.draw.rect(screen, (0, 0, 0), [50, 350, 250, 100], 250)
     my_font2 = pygame.font.Font('FrancoisOne-Regular.ttf', 70)
@@ -82,22 +78,17 @@ def welcome():
     pygame.display.flip()
 
 def loading():
-    global page, car_speed, car2_speed, text_alpha, text_direction, crash_sound_played, transition_complete
+    global page, car_speed, text_alpha, crash_sound_played, transition_complete
     page = 1
-    text_rect.y += text_speed * text_direction
 
-    # Move the cars based on car speed 
+    # Move the car based on car speed
     car_rect.x += car_speed
-    car2_rect.x -= car2_speed
 
-    # Change direction if the text hits the top or bottom of the screen
-    if text_rect.top <= 100 or text_rect.bottom >= 250:
-        text_direction *= -1
-
-    # Check for collision between the cars
-    if car_rect.colliderect(car2_rect):
+    # Check if the car reaches the end of the rectangle
+    if car_rect.right >= 780:  # Adjust as needed to match the rectangle's end position
+        car_speed = 0
         if text_alpha > 0:
-            text_alpha -= 5  # Decrease the alpha value to fade out the text
+            text_alpha -= 8  # Decrease the alpha value to fade out the text
         else:
             text_alpha = 0
             transition_complete = True
@@ -108,12 +99,18 @@ def loading():
 
     # Update text surface with new alpha value
     text.set_alpha(text_alpha)
-
+    # Background Loading Screen
+    loading_bg = pygame.image.load("orange.png")
+    bg_scale = pygame.transform.scale(loading_bg, (850, 650))
+    # Create a surface with an alpha channel (per-pixel transparency)
+    rect_surface = pygame.Surface((725, 50), pygame.SRCALPHA)
+    # Fill the surface with a color including the alpha value
+    rect_surface.fill((0, 0, 0, 128))  # Black color with 128 alpha (50% transparent)
     # Draw everything
-    screen.fill((40, 40, 40))
+    screen.blit(bg_scale, (-6,0))
+    screen.blit(rect_surface, (40, 500))
     screen.blit(text, text_rect)
     screen.blit(car_image, car_rect)
-    screen.blit(car2_image, car2_rect)
 
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
     lab = f.render('back', True, (255, 255, 255))
@@ -126,82 +123,51 @@ def loading():
     
     pygame.display.flip()
 
-    if car_rect.right > 415:
-        car_rect.x -= 2
-        pygame.display.flip()
-    if car2_rect.left < 400:
-        car2_rect.x += 2
-        pygame.display.flip()
-
 def roadmap():
-    screen.fill((0, 0, 0))
+    screen.fill((21, 21, 21))
 
-    pygame.draw.rect(screen, (255, 255, 255), [315, 95, 160, 160], 75)
-    pygame.draw.rect(screen, (255, 255, 255), [115, 95, 160, 160], 75)
-    pygame.draw.rect(screen, (255, 255, 255), [515, 95, 160, 160], 75)
-    pygame.draw.rect(screen, (255, 255, 255), [315, 345, 160, 160], 75)
-    pygame.draw.rect(screen, (255, 255, 255), [115, 345, 160, 160], 75)
-    pygame.draw.rect(screen, (255, 255, 255), [515, 345, 160, 160], 75)
+    # Drawing circles with labels
+    pygame.draw.circle(screen, (197, 255, 248), (195, 195), 76)  # First circle
+    pygame.draw.circle(screen, (255, 165, 165), (445, 195), 76)  # Second circle
+    pygame.draw.circle(screen, (206, 255, 125), (675, 195), 76)  # Third circle
+    pygame.draw.circle(screen, (179, 196, 255), (145, 445), 76)  # Fourth circle
+    pygame.draw.circle(screen, (255, 186, 148), (375, 445), 76)  # Fifth circle
+    pygame.draw.circle(screen, (244, 244, 116), (605, 445), 76)  # Sixth circle
 
-    image = pygame.image.load("sensor.png")
-    img = pygame.transform.scale(image, (150, 150))
-    img = img.convert()
-    screen.blit(img, (120, 100))
-
-    image2 = pygame.image.load("carcam.png")
-    img2 = pygame.transform.scale(image2, (150, 150))
-    img2 = img2.convert()
-    screen.blit(img2, (320, 100))
-
-    image3 = pygame.image.load("motor.png")
-    img3 = pygame.transform.scale(image3, (150, 150))
-    img3 = img3.convert()
-    screen.blit(img3, (520, 100))
-
-    image4 = pygame.image.load("battery.png")
-    img4 = pygame.transform.scale(image4, (150, 150))
-    img4 = img4.convert()
-    screen.blit(img4, (120, 350))
-
-    image5 = pygame.image.load("radiator.png")
-    img5 = pygame.transform.scale(image5, (150, 150))
-    img5 = img5.convert()
-    screen.blit(img5, (320, 350))
-
-    image6 = pygame.image.load("charger.png")
-    img6 = pygame.transform.scale(image6, (150, 150))
-    img6 = img6.convert()
-    screen.blit(img6, (520, 350))
-
+    # Font for labels
     myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
-    label = myfont.render("Sensors", True, (255, 255, 255))
-    screen.blit(label, (145, 260))
 
-    label = myfont.render("Cameras", True, (255, 255, 255))
-    screen.blit(label, (345, 260))
+   # Labels
+    label1 = myfont.render("Sensors", True, (0, 0, 0)) # First circle
+    label1_rect = label1.get_rect(center=(195, 195))
+    screen.blit(label1, label1_rect)
 
-    label = myfont.render("Motor", True, (255, 255, 255))
-    screen.blit(label, (550, 260))
+    label2 = myfont.render("Cameras", True, (0, 0, 0)) # Second circle
+    label2_rect = label2.get_rect(center=(445, 195))
+    screen.blit(label2, label2_rect)
 
-    label = myfont.render("Battery", True, (255, 255, 255))
-    screen.blit(label, (145, 510))
+    label3 = myfont.render("Motor", True, (0, 0, 0)) # Third circle
+    label3_rect = label3.get_rect(center=(675, 195))
+    screen.blit(label3, label3_rect)
 
-    label = myfont.render("Cooling", True, (255, 255, 255))
-    screen.blit(label, (345, 510))
+    label4 = myfont.render("Battery", True, (0, 0, 0)) # Fourth circle
+    label4_rect = label4.get_rect(center=(145, 445))
+    screen.blit(label4, label4_rect)
 
-    label = myfont.render("Charger", True, (255, 255, 255))
-    screen.blit(label, (545, 510))
+    label5 = myfont.render("Controller", True, (0, 0, 0)) # Fifth circle
+    label5_rect = label5.get_rect(center=(375, 445))
+    screen.blit(label5, label5_rect)
 
-    label = myfont.render("Part = Level", True, (255, 255, 255))
-    screen.blit(label, (350, 560))
+    label6 = myfont.render("Charger", True, (0, 0, 0)) # Sixth circle
+    label6_rect = label6.get_rect(center=(605, 445))
+    screen.blit(label6, label6_rect)
 
-    label = myfont.render("Parts: ", True, (255, 255, 255))
-    screen.blit(label, (75, 30))
+    # Title
+    title_font = pygame.font.Font("FrancoisOne-Regular.ttf", 50)
+    title = title_font.render("Part List", True, (255, 255, 255))
+    screen.blit(title, (320, 20))
 
-    myfont = pygame.font.Font("FrancoisOne-Regular.ttf", 50)
-    label = myfont.render("Part List", True, (255, 255, 255))
-    screen.blit(label, (320, 20))
-
+    # "back" button
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
     lab = f.render('back', True, (255, 255, 255))
     lab_rect = lab.get_rect(center=(700, 50))
@@ -292,9 +258,7 @@ def track3():
     bound2 = pygame.draw.rect(screen, (0,0,0), [250,106,349,109], 0)
     bound3 = pygame.draw.rect(screen, (0,0,0), [250,106,211,275], 0)
 
-
     bound6 = pygame.draw.rect(screen, (0,0,0), [0,493,800,200], 0)
-
 
     pygame.display.flip()
 
