@@ -19,7 +19,8 @@ car_speed = 8
 dc = pygame.image.load('car.png')
 drive_car_rect = dc.get_rect()
 drive_car = pygame.transform.scale(dc, (71, 39)) # Scale the image to 50x50
-
+drive_car_rect.x = 20
+drive_car_rect.y = 210
 clock = pygame.time.Clock()
 
 # Text setup
@@ -282,16 +283,6 @@ while True:
             pygame.quit()
             sys.exit()
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                drive_car_rect.x -= 5
-            elif event.key == pygame.K_RIGHT:
-                drive_car_rect.x += 5
-            elif event.key == pygame.K_UP:
-                drive_car_rect.y -= 5
-            elif event.key == pygame.K_DOWN:
-                drive_car_rect.y += 5
-
         if event.type == pygame.MOUSEBUTTONDOWN:
             x = event.pos[0]
             y = event.pos[1]
@@ -299,6 +290,9 @@ while True:
             #welcome screen
             if x > 675 and x < 750 and y > 25 and y < 75:  # Adjusted coordinates for "back" button
                 page -= 1 # back button
+                drive_car_rect.x = 20
+                drive_car_rect.y = 210
+
             elif page == 2 and x > 50 and x < 300 and y > 350 and y < 450: 
                 page = 3 # start button
             elif page == 2 and x > 350 and x < 770 and y > 350 and y < 450:
@@ -318,6 +312,21 @@ while True:
             elif page == 3 and x > 530 and x < 680 and y > 370 and y < 519: # battery
                 page=4
 
+    # Get the keys that are currently pressed
+    keys = pygame.key.get_pressed()
+    # also i know we didn't learn this but i just found out about it and its helpful to allow for holding down controls
+    # holding down the arrow keys is particularly helpful in a racing game. (helps with user experience)
+    # holding down arrow keys is a lot more fun than having to click every time
+
+    # Move the car based on the arrow keys
+    if keys[pygame.K_UP]:
+        drive_car_rect.y -= 2.5  #speed of the car
+    if keys[pygame.K_DOWN]:
+        drive_car_rect.y += 2.5
+    if keys[pygame.K_LEFT]:
+        drive_car_rect.x -= 2.5
+    if keys[pygame.K_RIGHT]:
+        drive_car_rect.x += 2.5
 
     screen.blit(drive_car, drive_car_rect)  # Draw the car on the screen
 
