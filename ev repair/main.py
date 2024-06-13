@@ -240,70 +240,63 @@ def roadmap():
     pygame.display.flip()
     
 def track1():
-    global drive_car, drive_car_rect
+    global drive_car_rect
     screen.fill((0, 0, 0))
-    track1back = pygame.image.load("track1back.png")
-    track1back = track1back.convert()
+    # Load and blit the background image
+    track1back = pygame.image.load("track1back.png").convert()
     screen.blit(track1back, (0, 0))
-
     # Load and blit the overlay image
-    track1face = pygame.image.load("track1face.png")
-    track1face = track1face.convert_alpha()  
+    track1face = pygame.image.load("track1face.png").convert_alpha()
     screen.blit(track1face, (0, 175))
+    # Check collision with track1back but not with track1face
+    if track1back.get_rect().colliderect(drive_car_rect) and not track1face.get_rect().colliderect(drive_car_rect):
+        print("Collision with track1back!")
 
     screen.blit(drive_car, drive_car_rect)
-
-    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
-    lab = f.render('back', True, (255, 255, 255))
-    lab_rect = lab.get_rect(center=(700, 50))
-
-    for x in range(-1, 2):
-        for y in range(-1, 2):
-            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
-    screen.blit(lab, lab_rect)
+    draw_back_button()
 
     pygame.display.flip()
 
 
 def track2():
-    global drive_car, drive_car_rect
+    global drive_car_rect
     screen.fill((0, 0, 0))
-    track1back = pygame.image.load("track2back.png")
-    track1back = track1back.convert()
-    screen.blit(track1back, (0, 0))
-
+    # Load and blit the background image
+    track2back = pygame.image.load("track2back.png").convert()
+    screen.blit(track2back, (0, 0))
     # Load and blit the overlay image
-    track1face = pygame.image.load("track2face.png")
-    track1face = track1face.convert_alpha()  
-    screen.blit(track1face, (0, 85))
+    track2face = pygame.image.load("track2face.png").convert_alpha()
+    screen.blit(track2face, (0, 85))
+    # Check collision with track2back
+    if track2back.get_rect().colliderect(drive_car_rect) and not track2face.get_rect().colliderect(drive_car_rect):
+        print("Collision with track2back!")
 
     screen.blit(drive_car, drive_car_rect)
-    
-    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
-    lab = f.render('back', True, (255, 255, 255))
-    lab_rect = lab.get_rect(center=(700, 50))
-
-    for x in range(-1, 2):
-        for y in range(-1, 2):
-            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
-    screen.blit(lab, lab_rect)
+    draw_back_button()
 
     pygame.display.flip()
+
 
 def track3():
-    global drive_car, drive_car_rect
+    global drive_car_rect
     screen.fill((0, 0, 0))
-    track1back = pygame.image.load("track3back.png")
-    track1back = track1back.convert()
-    screen.blit(track1back, (0, 0))
-
+    # Load and blit the background image
+    track3back = pygame.image.load("track3back.png").convert()
+    screen.blit(track3back, (0, 0))
     # Load and blit the overlay image
-    track1face = pygame.image.load("track3face.png")
-    track1face = track1face.convert_alpha()  
-    screen.blit(track1face, (0, 100))
+    track3face = pygame.image.load("track3face.png").convert_alpha()
+    screen.blit(track3face, (0, 100))
+    # Check collision with track3back
+    if track3back.get_rect().colliderect(drive_car_rect) and not track3face.get_rect().colliderect(drive_car_rect):
+        print("Collision with track3back!")
 
     screen.blit(drive_car, drive_car_rect)
+    draw_back_button()
 
+    end = pygame.draw.rect(screen, (255, 0, 0), [798, 0, 2, 227])
+    pygame.display.flip()
+
+def draw_back_button():
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
     lab = f.render('back', True, (255, 255, 255))
     lab_rect = lab.get_rect(center=(700, 50))
@@ -312,10 +305,6 @@ def track3():
         for y in range(-1, 2):
             screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
     screen.blit(lab, lab_rect)
-
-    end = pygame.draw.rect(screen, (255,0,0), [798,0,2,227])
-    # Check collision with each bound
-    pygame.display.flip()
 
 while True:
     clock.tick(60)
