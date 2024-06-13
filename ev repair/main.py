@@ -14,13 +14,13 @@ car_image = pygame.transform.scale(car, (130, 100))
 car_rect = car_image.get_rect()
 car_rect.x = 20
 car_rect.y = 480
-car_speed = 6
+car_speed = 8
 
 dc = pygame.image.load('car.png')
 drive_car_rect = dc.get_rect()
 drive_car = pygame.transform.scale(dc, (71, 39)) # Scale the image to 50x50
 drive_car_rect.x = 11
-drive_car_rect.y = 160
+drive_car_rect.y = 167.5
 
 clock = pygame.time.Clock()
 
@@ -293,18 +293,24 @@ while True:
                 page = 4
             if page == 2 and x > 350 and x < 770 and y > 350 and y < 450:
                 print('instruct')
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                drive_car_rect.y -= 11 # speed of the car
-            elif event.key == pygame.K_DOWN:
-                drive_car_rect.y += 11 # speed of the car
-            elif event.key == pygame.K_LEFT:
-                drive_car_rect.x -= 11 # speed of the car
-            elif event.key == pygame.K_RIGHT:
-                drive_car_rect.x += 11 # speed of the car
+
+    # Get the keys that are currently pressed
+    keys = pygame.key.get_pressed()
+    # also i know we didn't learn this but i just found out about it and its helpful to allow for holding down controls
+    # holding down the arrow keys is particularly helpful in a racing game. (helps with user experience)
+    # holding down arrow keys is a lot more fun than having to click every time
+
+    # Move the car based on the arrow keys
+    if keys[pygame.K_UP]:
+        drive_car_rect.y -= 2.5  #speed of the car
+    if keys[pygame.K_DOWN]:
+        drive_car_rect.y += 2.5
+    if keys[pygame.K_LEFT]:
+        drive_car_rect.x -= 2.5
+    if keys[pygame.K_RIGHT]:
+        drive_car_rect.x += 2.5
 
     screen.blit(drive_car, drive_car_rect)  # Draw the car on the screen
-
 
     if page == 0:
         loading()
@@ -319,3 +325,6 @@ while True:
         roadmap()
     elif page == 4:
         track1()
+
+    pygame.display.flip()
+
