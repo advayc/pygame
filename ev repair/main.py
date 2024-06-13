@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, math
 from pygame.locals import QUIT
 
 pygame.init()
@@ -236,86 +236,162 @@ def roadmap():
     draw_back_button()
     pygame.display.flip()
     
+info_ev_colliding = False
+quiz_ev_colliding = False
+
 def track1():
-    global drive_car_rect
+    global drive_car_rect, info_ev_colliding, quiz_ev_colliding
     screen.fill((0, 0, 0))
+
     # Load and blit the background image
     track1back = pygame.image.load("track1back.png").convert()
     screen.blit(track1back, (0, 0))
+
     # Load and blit the overlay image
     track1face = pygame.image.load("track1face.png").convert()
     screen.blit(track1face, (0, 175))
-    # Check collision with track1back but not with track1face
-    if drive_car_rect.colliderect(track1back.get_rect()) and not drive_car_rect.colliderect(track1face.get_rect()):
-        print("Collision with track1back!")
-    
-    info_ev = pygame.draw.circle(screen, (0,0,0), (268, 459), 25)
-    quiz_ev = pygame.draw.circle(screen, (0,0,0), (604, 301), 25)
+
+    info_ev_center = (268, 459)
+    info_ev_radius = 25
+    quiz_ev_center = (604, 301)
+    quiz_ev_radius = 25
+
+    pygame.draw.circle(screen, (0, 0, 0), info_ev_center, info_ev_radius)
+    pygame.draw.circle(screen, (0, 0, 0), quiz_ev_center, quiz_ev_radius)
 
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
     ev_text = f.render('EV', True, (255, 255, 255))
-    screen.blit(ev_text, ev_text.get_rect(center=info_ev.center))
-    screen.blit(ev_text, ev_text.get_rect(center=quiz_ev.center))
+    screen.blit(ev_text, ev_text.get_rect(center=info_ev_center))
+    screen.blit(ev_text, ev_text.get_rect(center=quiz_ev_center))
+
+    # Check collision with info_ev
+    closest_x = max(drive_car_rect.left, min(info_ev_center[0], drive_car_rect.right))
+    closest_y = max(drive_car_rect.top, min(info_ev_center[1], drive_car_rect.bottom))
+    distance = math.hypot(closest_x - info_ev_center[0], closest_y - info_ev_center[1])
+    if distance < info_ev_radius:
+        if not info_ev_colliding:
+            print('INFO')
+            info_ev_colliding = True
+    else:
+        info_ev_colliding = False
+
+    # Check collision with quiz_ev
+    closest_x = max(drive_car_rect.left, min(quiz_ev_center[0], drive_car_rect.right))
+    closest_y = max(drive_car_rect.top, min(quiz_ev_center[1], drive_car_rect.bottom))
+    distance = math.hypot(closest_x - quiz_ev_center[0], closest_y - quiz_ev_center[1])
+    if distance < quiz_ev_radius:
+        if not quiz_ev_colliding:
+            print('QUIZ')
+            quiz_ev_colliding = True
+    else:
+        quiz_ev_colliding = False
 
     screen.blit(drive_car, drive_car_rect)
     draw_back_button()
-
     pygame.display.flip()
 
 
 def track2():
-    global drive_car_rect
-
+    global drive_car_rect, info_ev_colliding, quiz_ev_colliding
     screen.fill((0, 0, 0))
+
     # Load and blit the background image
     track2back = pygame.image.load("track2back.png").convert()
     screen.blit(track2back, (0, 0))
+
     # Load and blit the overlay image
     track2face = pygame.image.load("track2face.png").convert_alpha()
     screen.blit(track2face, (0, 85))
-    # Check collision with track2back
-    if track2back.get_rect().colliderect(drive_car_rect) and not track2face.get_rect().colliderect(drive_car_rect):
-        print("Collision with track2back!")
-    
-    info_ev = pygame.draw.circle(screen, (0,0,0), (389, 264), 25)
-    quiz_ev = pygame.draw.circle(screen, (0,0,0), (544, 276), 25)
+
+    info_ev_center = (389, 264)
+    info_ev_radius = 25
+    quiz_ev_center = (544, 276)
+    quiz_ev_radius = 25
+
+    pygame.draw.circle(screen, (0, 0, 0), info_ev_center, info_ev_radius)
+    pygame.draw.circle(screen, (0, 0, 0), quiz_ev_center, quiz_ev_radius)
 
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
     ev_text = f.render('EV', True, (255, 255, 255))
-    screen.blit(ev_text, ev_text.get_rect(center=info_ev.center))
-    screen.blit(ev_text, ev_text.get_rect(center=quiz_ev.center))
+    screen.blit(ev_text, ev_text.get_rect(center=info_ev_center))
+    screen.blit(ev_text, ev_text.get_rect(center=quiz_ev_center))
+
+    # Check collision with info_ev
+    closest_x = max(drive_car_rect.left, min(info_ev_center[0], drive_car_rect.right))
+    closest_y = max(drive_car_rect.top, min(info_ev_center[1], drive_car_rect.bottom))
+    distance = math.hypot(closest_x - info_ev_center[0], closest_y - info_ev_center[1])
+    if distance < info_ev_radius:
+        if not info_ev_colliding:
+            print('INFO')
+            info_ev_colliding = True
+    else:
+        info_ev_colliding = False
+
+    # Check collision with quiz_ev
+    closest_x = max(drive_car_rect.left, min(quiz_ev_center[0], drive_car_rect.right))
+    closest_y = max(drive_car_rect.top, min(quiz_ev_center[1], drive_car_rect.bottom))
+    distance = math.hypot(closest_x - quiz_ev_center[0], closest_y - quiz_ev_center[1])
+    if distance < quiz_ev_radius:
+        if not quiz_ev_colliding:
+            print('QUIZ')
+            quiz_ev_colliding = True
+    else:
+        quiz_ev_colliding = False
 
     screen.blit(drive_car, drive_car_rect)
     draw_back_button()
-
     pygame.display.flip()
 
 
 def track3():
-    global drive_car_rect
-
+    global drive_car_rect, info_ev_colliding, quiz_ev_colliding
     screen.fill((0, 0, 0))
+
     # Load and blit the background image
     track3back = pygame.image.load("track3back.png").convert()
     screen.blit(track3back, (0, 0))
+
     # Load and blit the overlay image
     track3face = pygame.image.load("track3face.png").convert_alpha()
     screen.blit(track3face, (0, 100))
-    # Check collision with track3back
-    if track3back.get_rect().colliderect(drive_car_rect) and not track3face.get_rect().colliderect(drive_car_rect):
-        print("Collision with track3back!")
-    
-    info_ev = pygame.draw.circle(screen, (0,0,0), (173, 427), 25)
-    quiz_ev = pygame.draw.circle(screen, (0,0,0), (544, 276), 25)
+
+    info_ev_center = (173, 427)
+    info_ev_radius = 25
+    quiz_ev_center = (544, 276)
+    quiz_ev_radius = 25
+
+    pygame.draw.circle(screen, (0, 0, 0), info_ev_center, info_ev_radius)
+    pygame.draw.circle(screen, (0, 0, 0), quiz_ev_center, quiz_ev_radius)
 
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
     ev_text = f.render('EV', True, (255, 255, 255))
-    screen.blit(ev_text, ev_text.get_rect(center=info_ev.center))
-    screen.blit(ev_text, ev_text.get_rect(center=quiz_ev.center))
+    screen.blit(ev_text, ev_text.get_rect(center=info_ev_center))
+    screen.blit(ev_text, ev_text.get_rect(center=quiz_ev_center))
+
+    # Check collision with info_ev
+    closest_x = max(drive_car_rect.left, min(info_ev_center[0], drive_car_rect.right))
+    closest_y = max(drive_car_rect.top, min(info_ev_center[1], drive_car_rect.bottom))
+    distance = math.hypot(closest_x - info_ev_center[0], closest_y - info_ev_center[1])
+    if distance < info_ev_radius:
+        if not info_ev_colliding:
+            print('INFO')
+            info_ev_colliding = True
+    else:
+        info_ev_colliding = False
+
+    # Check collision with quiz_ev
+    closest_x = max(drive_car_rect.left, min(quiz_ev_center[0], drive_car_rect.right))
+    closest_y = max(drive_car_rect.top, min(quiz_ev_center[1], drive_car_rect.bottom))
+    distance = math.hypot(closest_x - quiz_ev_center[0], closest_y - quiz_ev_center[1])
+    if distance < quiz_ev_radius:
+        if not quiz_ev_colliding:
+            print('QUIZ')
+            quiz_ev_colliding = True
+    else:
+        quiz_ev_colliding = False
 
     screen.blit(drive_car, drive_car_rect)
     draw_back_button()
-
     end = pygame.draw.rect(screen, (255, 0, 0), [798, 0, 2, 227])
     pygame.display.flip()
 
