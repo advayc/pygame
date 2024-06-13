@@ -14,7 +14,7 @@ car_image = pygame.transform.scale(car, (130, 100))
 car_rect = car_image.get_rect()
 car_rect.x = 20
 car_rect.y = 480
-car_speed = 25
+car_speed = 15
 
 dc = pygame.image.load('car.png')
 drive_car_rect = dc.get_rect()
@@ -42,6 +42,17 @@ transition_complete = False
 
 # Instruction Audio
 audio_playing = False
+
+def draw_back_button():
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
+    lab = f.render('back', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 50))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+    screen.blit(lab, lab_rect)
+
 def loading():
     global page, car_speed, text_alpha, crash_sound_played, transition_complete
     page = 1
@@ -90,6 +101,7 @@ def loading():
 
 def welcome():
     global page
+
     my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 125)
     text = my_font.render('EV REPAIR', True, (255, 255, 255))
     text_rect = text.get_rect(center=(400, 150))
@@ -119,21 +131,15 @@ def welcome():
     text3_rect = text3.get_rect(center=(550, 400))
     screen.blit(text3, text3_rect)
 
-    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
-    lab = f.render('back', True, (255, 255, 255))
-    lab_rect = lab.get_rect(center=(700, 50))
+    draw_back_button()
 
-    for x in range(-1, 2):
-        for y in range(-1, 2):
-            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
-    screen.blit(lab, lab_rect)
-    
     # Render the text
     screen.blit(text, text_rect)
     pygame.display.flip()
 
 def instructions():
     global page
+
     screen.fill((205,205,205))
     instruct_bg = pygame.image.load("instruct_bg.jpg")
     instruct = pygame.transform.scale(instruct_bg, (800, 600))
@@ -227,16 +233,7 @@ def roadmap():
     title = title_font.render("Part List", True, (255, 255, 255))
     screen.blit(title, (320, 20))
 
-    # "back" button
-    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
-    lab = f.render('back', True, (255, 255, 255))
-    lab_rect = lab.get_rect(center=(700, 50))
-
-    for x in range(-1, 2):
-        for y in range(-1, 2):
-            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
-    screen.blit(lab, lab_rect)
-
+    draw_back_button()
     pygame.display.flip()
     
 def track1():
@@ -246,11 +243,19 @@ def track1():
     track1back = pygame.image.load("track1back.png").convert()
     screen.blit(track1back, (0, 0))
     # Load and blit the overlay image
-    track1face = pygame.image.load("track1face.png").convert_alpha()
+    track1face = pygame.image.load("track1face.png").convert()
     screen.blit(track1face, (0, 175))
     # Check collision with track1back but not with track1face
-    if track1back.get_rect().colliderect(drive_car_rect) and not track1face.get_rect().colliderect(drive_car_rect):
+    if drive_car_rect.colliderect(track1back.get_rect()) and not drive_car_rect.colliderect(track1face.get_rect()):
         print("Collision with track1back!")
+    
+    info_ev = pygame.draw.circle(screen, (0,0,0), (268, 459), 25)
+    quiz_ev = pygame.draw.circle(screen, (0,0,0), (604, 301), 25)
+
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
+    ev_text = f.render('EV', True, (255, 255, 255))
+    screen.blit(ev_text, ev_text.get_rect(center=info_ev.center))
+    screen.blit(ev_text, ev_text.get_rect(center=quiz_ev.center))
 
     screen.blit(drive_car, drive_car_rect)
     draw_back_button()
@@ -260,6 +265,7 @@ def track1():
 
 def track2():
     global drive_car_rect
+
     screen.fill((0, 0, 0))
     # Load and blit the background image
     track2back = pygame.image.load("track2back.png").convert()
@@ -270,6 +276,14 @@ def track2():
     # Check collision with track2back
     if track2back.get_rect().colliderect(drive_car_rect) and not track2face.get_rect().colliderect(drive_car_rect):
         print("Collision with track2back!")
+    
+    info_ev = pygame.draw.circle(screen, (0,0,0), (389, 264), 25)
+    quiz_ev = pygame.draw.circle(screen, (0,0,0), (544, 276), 25)
+
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
+    ev_text = f.render('EV', True, (255, 255, 255))
+    screen.blit(ev_text, ev_text.get_rect(center=info_ev.center))
+    screen.blit(ev_text, ev_text.get_rect(center=quiz_ev.center))
 
     screen.blit(drive_car, drive_car_rect)
     draw_back_button()
@@ -279,6 +293,7 @@ def track2():
 
 def track3():
     global drive_car_rect
+
     screen.fill((0, 0, 0))
     # Load and blit the background image
     track3back = pygame.image.load("track3back.png").convert()
@@ -289,22 +304,20 @@ def track3():
     # Check collision with track3back
     if track3back.get_rect().colliderect(drive_car_rect) and not track3face.get_rect().colliderect(drive_car_rect):
         print("Collision with track3back!")
+    
+    info_ev = pygame.draw.circle(screen, (0,0,0), (173, 427), 25)
+    quiz_ev = pygame.draw.circle(screen, (0,0,0), (544, 276), 25)
+
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
+    ev_text = f.render('EV', True, (255, 255, 255))
+    screen.blit(ev_text, ev_text.get_rect(center=info_ev.center))
+    screen.blit(ev_text, ev_text.get_rect(center=quiz_ev.center))
 
     screen.blit(drive_car, drive_car_rect)
     draw_back_button()
 
     end = pygame.draw.rect(screen, (255, 0, 0), [798, 0, 2, 227])
     pygame.display.flip()
-
-def draw_back_button():
-    f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
-    lab = f.render('back', True, (255, 255, 255))
-    lab_rect = lab.get_rect(center=(700, 50))
-
-    for x in range(-1, 2):
-        for y in range(-1, 2):
-            screen.blit(f.render('back', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
-    screen.blit(lab, lab_rect)
 
 while True:
     clock.tick(60)
@@ -319,10 +332,11 @@ while True:
             y = event.pos[1]
             print(x,y)
 
-            if page == 5 or page == 6 or page == 7 and 675 < x < 750 and 25 < y < 75:
-                page = 4  # Go back to roadmap
-                drive_car_rect.x = 20
-                drive_car_rect.y = 210
+            if page == 7 or page == 6 or page == 5:
+                if 675 < x < 750 and 25 < y < 75:
+                    page = 4  # Go back to roadmap
+                    drive_car_rect.x = 20
+                    drive_car_rect.y = 210
 
             elif page == 3 and 675 < x < 750 and 525 < y < 580:
                 page = 2  # Go back to welcome screen
