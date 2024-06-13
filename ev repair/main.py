@@ -19,8 +19,6 @@ car_speed = 8
 dc = pygame.image.load('car.png')
 drive_car_rect = dc.get_rect()
 drive_car = pygame.transform.scale(dc, (71, 39)) # Scale the image to 50x50
-drive_car_rect.x = 11
-drive_car_rect.y = 167.5
 
 clock = pygame.time.Clock()
 
@@ -195,7 +193,6 @@ def track1():
     screen.blit(track1, (0, 0))
     screen.blit(drive_car, drive_car_rect)
 
-
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
     lab = f.render('back', True, (255, 255, 255))
     lab_rect = lab.get_rect(center=(700, 50))
@@ -206,11 +203,11 @@ def track1():
     screen.blit(lab, lab_rect)
 
     # dis allowed track sections
-    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,131], 0)
+    bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,176], 0)
     bound2 = pygame.draw.rect(screen, (0,0,0), [339,120,476,120], 0)
     bound3 = pygame.draw.rect(screen, (0,0,0), [340,0,122,420], 0)
     bound4 = pygame.draw.rect(screen, (0,0,0), [0,515,800,100], 0)
-    bound5 = pygame.draw.rect(screen, (0,0,0), [0,240,203,350], 0)
+    bound5 = pygame.draw.rect(screen, (0,0,0), [0,280,203,350], 0)
     bound6 = pygame.draw.rect(screen, (0,0,0), [587,370,250,350], 0)
 
     pygame.display.flip()
@@ -222,7 +219,8 @@ def track2():
     track1 = pygame.image.load("track2.png")
     track1 = track1.convert()
     screen.blit(track1, (0, 0))
-
+    screen.blit(drive_car, drive_car_rect)
+    
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
     lab = f.render('back', True, (255, 255, 255))
     lab_rect = lab.get_rect(center=(700, 50))
@@ -252,6 +250,7 @@ def track3():
     track1 = pygame.image.load("track3.png")
     track1 = track1.convert()
     screen.blit(track1, (0, 0))
+    screen.blit(drive_car, drive_car_rect)
 
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
     lab = f.render('back', True, (255, 255, 255))
@@ -266,12 +265,14 @@ def track3():
     bound1 = pygame.draw.rect(screen, (0,0,0), [0,0,800,107], 0)
     bound2 = pygame.draw.rect(screen, (0,0,0), [250,106,349,109], 0)
     bound3 = pygame.draw.rect(screen, (0,0,0), [250,106,211,275], 0)
-    bound4 = pygame.draw.rect(screen, (0,0,0), [0,214,105,300], 0)
+    bound4 = pygame.draw.rect(screen, (0,0,0), [0,280,105,300], 0)
     bound5 = pygame.draw.rect(screen, (0,0,0), [587,344,400,300], 0)
     bound6 = pygame.draw.rect(screen, (0,0,0), [723,230,400,300], 0)
     bound7 = pygame.draw.rect(screen, (0,0,0), [0,492,800,200], 0)
+    bound8 = pygame.draw.rect(screen, (0,0,0), [0,0,300,176], 0)
 
     pygame.display.flip()
+
 
 while True:
     clock.tick(60)
@@ -281,34 +282,42 @@ while True:
             pygame.quit()
             sys.exit()
 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                drive_car_rect.x -= 5
+            elif event.key == pygame.K_RIGHT:
+                drive_car_rect.x += 5
+            elif event.key == pygame.K_UP:
+                drive_car_rect.y -= 5
+            elif event.key == pygame.K_DOWN:
+                drive_car_rect.y += 5
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             x = event.pos[0]
             y = event.pos[1]
             print(x,y)
+            #welcome screen
             if x > 675 and x < 750 and y > 25 and y < 75:  # Adjusted coordinates for "back" button
                 page -= 1 # back button
-            if page == 2 and x > 50 and x < 300 and y > 350 and y < 450: 
+            elif page == 2 and x > 50 and x < 300 and y > 350 and y < 450: 
                 page = 3 # start button
-            if page == 3 and x > 100 and x < 300 and y > 100 and y < 260: # brake button
-                page = 4
-            if page == 2 and x > 350 and x < 770 and y > 350 and y < 450:
+            elif page == 2 and x > 350 and x < 770 and y > 350 and y < 450:
                 print('instruct')
 
-    # Get the keys that are currently pressed
-    keys = pygame.key.get_pressed()
-    # also i know we didn't learn this but i just found out about it and its helpful to allow for holding down controls
-    # holding down the arrow keys is particularly helpful in a racing game. (helps with user experience)
-    # holding down arrow keys is a lot more fun than having to click every time
+            # roadmap screen
+            elif page == 3 and x > 100 and x < 300 and y > 120 and y < 270: # brake 
+                page=4
+            elif page == 3 and x > 368 and x < 522 and y > 120 and y < 270: # cameras 
+                page=5
+            elif page == 3 and x > 600 and x < 748 and y > 120 and y < 270: # motor 
+                page=6
+            elif page == 3 and x > 70 and x < 220 and y > 370 and y < 519: # battery
+                page=5
+            elif page == 3 and x > 300 and x < 451 and y > 370 and y < 519: # controller
+                page=6
+            elif page == 3 and x > 530 and x < 680 and y > 370 and y < 519: # battery
+                page=4
 
-    # Move the car based on the arrow keys
-    if keys[pygame.K_UP]:
-        drive_car_rect.y -= 2.5  #speed of the car
-    if keys[pygame.K_DOWN]:
-        drive_car_rect.y += 2.5
-    if keys[pygame.K_LEFT]:
-        drive_car_rect.x -= 2.5
-    if keys[pygame.K_RIGHT]:
-        drive_car_rect.x += 2.5
 
     screen.blit(drive_car, drive_car_rect)  # Draw the car on the screen
 
@@ -325,6 +334,9 @@ while True:
         roadmap()
     elif page == 4:
         track1()
+    elif page == 5:
+        track2()
+    elif page == 6:
+        track3()
 
     pygame.display.flip()
-
