@@ -241,15 +241,14 @@ def track1():
     
     # Clear the screen
     screen.fill((0, 0, 0))
-
     # Load and blit the background image
     track1back = pygame.image.load("track1back.png").convert()
     screen.blit(track1back, (0, 0))
-
     # Load and blit the overlay image
-    track1face = pygame.image.load("track1face.png").convert()
-    screen.blit(track1face, (0, 175))
-
+    track1face = pygame.image.load("track1face.png").convert_alpha()
+    screen.blit(track1face, (0,175))
+    back = track1back.get_rect()
+    face = track1face.get_rect()
     # Define event points
     info_ev_center = (268, 459)
     quiz_ev_center = (604, 301)
@@ -257,27 +256,26 @@ def track1():
     # Draw event points as circles
     info_ev = pygame.draw.circle(screen, (0, 0, 0), info_ev_center, 25)
     quiz_ev = pygame.draw.circle(screen, (0, 0, 0), quiz_ev_center, 25)
-
     # Load font and render text
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 30)
     ev_text = f.render('EV', True, (255, 255, 255))
     screen.blit(ev_text, ev_text.get_rect(center=info_ev_center))
     screen.blit(ev_text, ev_text.get_rect(center=quiz_ev_center))
-
     # Blit the car image
     screen.blit(drive_car, drive_car_rect)
-
     # Draw the back button (function not provided, ensure it's defined elsewhere)
     draw_back_button()
-
     # Check for collisions with event points
     # Check if the car is within the range of the event points
     if abs(drive_car_rect[0] - info_ev_center[0]) <= 50 and abs(drive_car_rect[1] - info_ev_center[1]) <= 50:
         print('info')
-    if abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
+    elif abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
         print('quiz')
 
-    # Update the display
+    # Check if the car is off the track
+    if not drive_car_rect.colliderect(face):
+        print('The car is off the track!')
+    
     pygame.display.flip()
 
 def track2():
@@ -325,9 +323,11 @@ def track3():
     # Load and blit the background image
     track3back = pygame.image.load("track3back.png").convert()
     screen.blit(track3back, (0, 0))
+    back = track3back.get_rect()
     # Load and blit the overlay image
     track3face = pygame.image.load("track3face.png").convert_alpha()
     screen.blit(track3face, (0, 100))
+    face = track3face.get_rect()
 
     # Define event points
     info_ev_center = (173, 427)
