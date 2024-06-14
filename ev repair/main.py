@@ -13,7 +13,7 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 GRAY = (200, 200, 200)
-font = pygame.font.Font('Inter.ttf', 32)
+font = pygame.font.Font('Inter.ttf', 20)
 
 # Load images
 car = pygame.image.load("car3.png")
@@ -218,6 +218,10 @@ def roadmap():
     title_font = pygame.font.Font("FrancoisOne-Regular.ttf", 45)
     title = title_font.render("Part List", True, (255, 255, 255))
     screen.blit(title, (320, 20))
+
+    title_font = pygame.font.Font("Inter.ttf", 15)
+    subtitle = title_font.render("every part is a new journey to learn!!", True, (255, 255, 255))
+    screen.blit(subtitle, (285,554))
 
     draw_back_button()
     pygame.display.flip()
@@ -432,8 +436,13 @@ def track11():
 
     pygame.display.flip()
 
+def quiz_done():
+    global page, quiz_completed_count
+    quiz_completed_count += 1
+    page = 4  # Return to roadmap
+
 def true_false_quiz():
-    global screen
+    global screen, page, quiz_completed_count
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("True or False Game")
 
@@ -451,6 +460,7 @@ def true_false_quiz():
     # Variables
     current_question = 0
     feedback = ""
+    feedback_color = (255, 255, 255)  # Default color is white
 
     # Main loop
     while True:
@@ -461,7 +471,7 @@ def true_false_quiz():
         screen.blit(question_text, (50, 50))
 
         # Display feedback
-        feedback_text = font.render(feedback, True, (255, 255, 255))
+        feedback_text = font.render(feedback, True, feedback_color)
         screen.blit(feedback_text, (50, 150))
 
         # Display True/False buttons
@@ -488,19 +498,27 @@ def true_false_quiz():
                 if 50 <= x <= 150 and 200 <= y <= 250:  # True button
                     if answers[current_question] == True:
                         feedback = "Correct!"
+                        feedback_color = (0, 255, 0)  # Green color for correct
                     else:
                         feedback = "Wrong!"
+                        feedback_color = (255, 0, 0)  # Red color for wrong
                 elif 200 <= x <= 300 and 200 <= y <= 250:  # False button
                     if answers[current_question] == False:
                         feedback = "Correct!"
+                        feedback_color = (0, 255, 0)  # Green color for correct
                     else:
                         feedback = "Wrong!"
+                        feedback_color = (255, 0, 0)  # Red color for wrong
                 elif 650 <= x <= 750 and 500 <= y <= 550:  # Next button
                     current_question += 1
                     if current_question >= len(questions):
-                        current_question = 0
+                        quiz_done()
+                        drive_car_rect.x = 20
+                        drive_car_rect.y = 480
+                        return  # Exit the function to return to roadmap
                     feedback = ""
-        draw_back_button()
+                    feedback_color = (255, 255, 255)  # Reset color to white
+
         pygame.display.flip()
 
 def draw_text(text, position, color=WHITE):
@@ -508,13 +526,16 @@ def draw_text(text, position, color=WHITE):
     screen.blit(text_surface, position)
 
 def multiple_choice_quiz():
-    global screen
+    global screen, page, quiz_completed_count
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Multiple Choice Game")
 
+    # Load font
+    font = pygame.font.SysFont('Inter.ttf', 32)
+
     # Questions and answers
     questions = [
-        ("What is one of the biggest ethical concerns about self-driving cars?",
+        ("What is one of the ethical concerns about self-driving cars?",
          ["A. Decision making in moments of accidents",
           "B. The speed of the car",
           "C. The color of the car"],
@@ -529,89 +550,80 @@ def multiple_choice_quiz():
     # Variables
     current_question = 0
     result_text = ""
+    feedback_color = (255, 255, 255)  # Default color is white
 
-    def display_question(question_data):
-        screen.fill(BLACK)
-        question_text, answers, correct_index = question_data
+    # Main loop
+    running = True
+    while running:
+        screen.fill((0, 0, 0))
 
+        # Display question
+        question_text, answers, correct_index = questions[current_question]
         draw_text(question_text, (50, 50))
 
+        # Display answers
         for idx, answer in enumerate(answers):
             draw_text(answer, (50, 150 + idx * 50))
 
         # Display the result text if available
         if result_text:
-            draw_text(result_text, (50, 400), BLUE)
+            draw_text(result_text, (50, 400), feedback_color)
 
-    def check_answer(question_data, answer_idx):
-        _, _, correct_index = question_data
-        return answer_idx == correct_index
-
-    def display_end_screen():
-        screen.fill(BLACK)
-        draw_text("Quiz Completed!", (300, 250))
-        pygame.draw.rect(screen, GREEN, (350, 350, 100, 50))
-        draw_text("Next", (375, 365))
-
-    # Main loop
-    running = True
-    quiz_completed = False
-
-    while running:
+        # Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                pygame.quit()
+                sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
-                if not quiz_completed:
-                    if 50 <= x <= 750:
-                        for idx in range(len(questions[current_question][1])):
-                            if 150 + idx * 50 <= y <= 150 + (idx + 1) * 50:
-                                if check_answer(questions[current_question], idx):
-                                    result_text = "Correct!"
-                                else:
-                                    result_text = "Wrong answer."
+                if 50 <= x <= 750:
+                    for idx in range(len(answers)):
+                        if 150 + idx * 50 <= y <= 150 + (idx + 1) * 50:
+                            if idx == correct_index:
+                                result_text = "Correct!"
+                                feedback_color = (0, 255, 0)  # Green color for correct
+                            else:
+                                result_text = "Wrong answer."
+                                feedback_color = (255, 0, 0)  # Red color for wrong
 
-                                current_question += 1
-                                if current_question >= len(questions):
-                                    quiz_completed = True
-                                break
-                else:
-                    if 350 <= x <= 450 and 350 <= y <= 400:
-                        screen.fill(BLACK)
-                        pygame.display.flip()
-                        pygame.time.wait(2000)  # Wait for 2 seconds
-                        running = False
+                            current_question += 1
+                            break
 
-        if not quiz_completed:
-            if current_question < len(questions):
-                display_question(questions[current_question])
-        else:
-            display_end_screen()
-        draw_back_button()
+        # Check if quiz is completed
+        if current_question >= len(questions):
+            screen.fill((0, 0, 0))
+            draw_text("Quiz Completed!", (325,313))
+            pygame.display.flip()
+            pygame.time.wait(2000)  # Wait for 2 seconds
+            quiz_done()
+            drive_car_rect.x = 20
+            drive_car_rect.y = 480
+
+            return  # Exit the function to return to the roadmap
+
         pygame.display.flip()
 
 def fill_blanks_quiz():
-    global screen
+    global screen, page, quiz_completed_count
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Fill in the Blanks")
 
     # Load font
-    font = pygame.font.SysFont(None, 22)
+    font = pygame.font.SysFont('Inter.ttf', 27)
 
     # Define the sentences and their answers
     questions = [
-        "Advanced sensors and artificial intelligence enable _____________ cars to navigate roads independently.",
+        "Advanced sensors  enable _____________ cars to navigate roads independently.",
         "Many self-driving cars are _____________ to align with sustainability goals.",
-        "Continuous evolution of ______________ is necessary for the advancement of self-driving technology."
+        "Continuous evolution of ______________ is necessary for self-driving technology."
     ]
     answers = ["self-driving", "electric", "regulation"]
 
-    # Load check and cross images (replace with actual images)
-    check_img = pygame.Surface((30, 30))  # Placeholder for check image
-    check_img.fill(GREEN)
-    wrong_img = pygame.Surface((30, 30))  # Placeholder for wrong image
-    wrong_img.fill(RED)
+    # Load check and cross images 
+    check_img = pygame.image.load("check.png")
+    check_img = pygame.transform.scale(check_img, (30, 30))
+    wrong_img = pygame.image.load("wrong.png")
+    wrong_img = pygame.transform.scale(wrong_img, (30, 30))
 
     # Game variables
     current_question = 0
@@ -643,7 +655,7 @@ def fill_blanks_quiz():
         # Submit button
         pygame.draw.rect(screen, (255, 255, 255), (650, 500, 100, 50), 2)
         submit_text = font.render("Submit", True, (255, 255, 255))
-        screen.blit(submit_text, (670, 510))
+        screen.blit(submit_text, (666, 515))
 
         # Event handling
         for event in pygame.event.get():
@@ -662,221 +674,204 @@ def fill_blanks_quiz():
                 if 650 <= event.pos[0] <= 750 and 500 <= event.pos[1] <= 550:
                     current_question += 1
                     if current_question >= len(questions):
-                        print("Switching to a new page...")
-                        time.sleep(2)  # Wait for 5 seconds before switching
-                        return  # Exit the function to switch to the next quiz or end the program
-                    input_text = ""  # Reset input text
-                    feedback_image = None
+                        quiz_done()
+                        drive_car_rect.x = 20
+                        drive_car_rect.y = 480
+                        return  # Exit the function to return to roadmap
+                    input_text = ""
                     submit_clicked = False
-        draw_back_button()
+
         pygame.display.flip()
 
 def choose_correct_option_quiz():
-    global screen
+    global screen, page, quiz_completed_count
     screen = pygame.display.set_mode((screen_width, screen_height))
-    pygame.display.set_caption("Choose the Correct Option Quiz")
+    pygame.display.set_caption("Choose Correct Option Quiz")
+
+    # Load font
+    font = pygame.font.SysFont('Inter.ttf', 32)
 
     # Questions and answers
     questions = [
-        ("What is one of the main challenges of implementing AI in self-driving cars?",
-         ["A. High computational power",
-          "B. Limited sensors",
-          "C. Inability to learn from data"],
+        ("Which of the following is a sensor used in self-driving cars?",
+         ["A. Camera",
+          "B. Compass",
+          "C. Microphone",
+          "D. Thermometer"],
          0),  # Index of the correct answer in the answers list
-        ("Which sensor is essential for detecting pedestrians in self-driving cars?",
-         ["A. Lidar",
-          "B. Radar",
-          "C. Ultrasonic sensors"],
-         2),  # Index of the correct answer in the answers list
-        ("What type of technology enables self-driving cars to navigate without human intervention?",
-         ["A. Blockchain",
-          "B. Artificial Intelligence",
-          "C. Virtual Reality"],
-         1)   # Index of the correct answer in the answers list
+        ("What type of technology is crucial for mapping in self-driving cars?",
+         ["A. GPS",
+          "B. Radio waves",
+          "C. Bluetooth",
+          "D. Wi-Fi"],
+         0),  # Index of the correct answer in the answers list
+        ("What does LiDAR stand for?",
+         ["A. Light Detection and Ranging",
+          "B. Laser Infrared Detection and Ranging",
+          "C. Long-range Imaging Detection and Ranging",
+          "D. Low-Intensity Distance and Ranging"],
+         0),  # Index of the correct answer in the answers list
+        ("Which company launched the Autopilot feature for its vehicles?",
+         ["A. Tesla",
+          "B. Google",
+          "C. Apple",
+          "D. Amazon"],
+         0)   # Index of the correct answer in the answers list
     ]
 
     # Variables
     current_question = 0
     result_text = ""
+    feedback_color = (255, 255, 255)  # Default color is white
 
-    def display_question(question_data):
-        screen.fill(BLACK)
-        question_text, options, correct_index = question_data
-
-        draw_text(question_text, (50, 50))
-
-        for idx, option in enumerate(options):
-            draw_text(option, (50, 150 + idx * 50))
-
-        # Display the result text if available
-        if result_text:
-            draw_text(result_text, (50, 400), BLUE)
-
-    def check_answer(question_data, answer_idx):
-        _, _, correct_index = question_data
-        return answer_idx == correct_index
-
-    def display_end_screen():
-        screen.fill(BLACK)
-        draw_text("Quiz Completed!", (300, 250))
-        pygame.draw.rect(screen, GREEN, (350, 350, 100, 50))
-        draw_text("Next", (375, 365))
-
-    # Main loop
     running = True
-    quiz_completed = False
-
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = event.pos
-                if not quiz_completed:
-                    if 50 <= x <= 750:
-                        for idx in range(len(questions[current_question][1])):
-                            if 150 + idx * 50 <= y <= 150 + (idx + 1) * 50:
-                                if check_answer(questions[current_question], idx):
-                                    result_text = "Correct!"
-                                else:
-                                    result_text = "Wrong answer."
+        screen.fill((0, 0, 0))
 
-                                current_question += 1
-                                if current_question >= len(questions):
-                                    quiz_completed = True
-                                break
-                else:
-                    if 350 <= x <= 450 and 350 <= y <= 400:
-                        screen.fill(BLACK)
-                        pygame.display.flip()
-                        pygame.time.wait(2000)  # Wait for 2 seconds
-                        running = False
-
-        if not quiz_completed:
-            if current_question < len(questions):
-                display_question(questions[current_question])
-        else:
-            display_end_screen()
-
-        draw_back_button()
-        pygame.display.flip()
-
-def multiple_choice_quiz_v2():
-    global screen
-    screen = pygame.display.set_mode((screen_width, screen_height))
-    pygame.display.set_caption("Multiple Choice Game - Safety and Cost")
-
-    # Questions and answers
-    questions = [
-        ("What is one of the key promises of self-driving cars?",
-         ["A. Enhancing road safety",
-          "B. Reducing fuel consumption",
-          "C. Making cars cheaper"],
-         0),  # Correct answer is A
-        ("What is one major challenge for the safety of AVs?",
-         ["A. Maintaining lane position",
-          "B. Diverse weather and road conditions",
-          "C. Communicating with passengers"],
-         1),  # Correct answer is B
-        ("Why is the cost of AVs a barrier to widespread adoption?",
-         ["A. High price of sensors and computing components",
-          "B. Lack of consumer interest",
-          "C. High fuel costs"],
-         0),  # Correct answer is A
-        ("What potential convenience could AVs provide?",
-         ["A. Increased fuel efficiency",
-          "B. Increased productivity during commutes",
-          "C. Reduced travel distances"],
-         1),  # Correct answer is B
-    ]
-
-    # Variables
-    current_question = 0
-    result_text = ""
-
-    def display_question(question_data):
-        screen.fill(BLACK)
-        question_text, answers, correct_index = question_data
-
+        # Display question
+        question_text, answers, correct_index = questions[current_question]
         draw_text(question_text, (50, 50))
 
+        # Display answers
         for idx, answer in enumerate(answers):
             draw_text(answer, (50, 150 + idx * 50))
 
         # Display the result text if available
         if result_text:
-            draw_text(result_text, (50, 400), BLUE)
+            draw_text(result_text, (50, 400), feedback_color)
 
-    def check_answer(question_data, answer_idx):
-        _, _, correct_index = question_data
-        return answer_idx == correct_index
+        # Event handling
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = event.pos
+                if 50 <= x <= 750:
+                    for idx in range(len(answers)):
+                        if 150 + idx * 50 <= y <= 150 + (idx + 1) * 50:
+                            if idx == correct_index:
+                                result_text = "Correct!"
+                                feedback_color = (0, 255, 0)  # Green color for correct
+                            else:
+                                result_text = "Wrong answer."
+                                feedback_color = (255, 0, 0)  # Red color for wrong
 
-    def display_end_screen():
-        screen.fill(BLACK)
-        draw_text("Quiz Completed!", (300, 250))
-        pygame.draw.rect(screen, GREEN, (350, 350, 100, 50))
-        draw_text("Next", (375, 365))
+                            current_question += 1
+                            break
+
+        # Check if quiz is completed
+        if current_question >= len(questions):
+            screen.fill((0, 0, 0))
+            draw_text("Quiz Completed!", (325,313))
+            pygame.display.flip()
+            pygame.time.wait(2000)  # Wait for 2 seconds
+            quiz_done()
+            drive_car_rect.x = 20
+            drive_car_rect.y = 480
+            return  # Exit the function to return to the roadmap
+
+        pygame.display.flip()
+
+def multiple_choice_quiz_v2():
+    global screen, page, quiz_completed_count
+    screen = pygame.display.set_mode((screen_width, screen_height))
+    pygame.display.set_caption("Multiple Choice Game")
+
+    # Load font
+    font = pygame.font.SysFont('Inter.ttf', 33)
+
+    # Questions and answers
+    questions = [
+        ("Which company is known for developing Waymo, a self-driving technology?",
+         ["A. Tesla",
+          "B. Google",
+          "C. Apple",
+          "D. Amazon"],
+         1),  # Index of the correct answer in the answers list
+        ("What is an component in LiDAR technology used in self-driving cars?",
+         ["A. Cameras",
+          "B. Radar",
+          "C. Light",
+          "D. Sound waves"],
+         2)   # Index of the correct answer in the answers list
+    ]
+
+    # Variables
+    current_question = 0
+    result_text = ""
+    feedback_color = (255, 255, 255)  # Default color is white
 
     # Main loop
     running = True
-    quiz_completed = False
-
     while running:
+        screen.fill((0, 0, 0))
+
+        # Display question
+        question_text, answers, correct_index = questions[current_question]
+        draw_text(question_text, (50, 50))
+
+        # Display answers
+        for idx, answer in enumerate(answers):
+            draw_text(answer, (50, 150 + idx * 50))
+
+        # Display the result text if available
+        if result_text:
+            draw_text(result_text, (50, 400), feedback_color)
+
+        # Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                pygame.quit()
+                sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
-                if not quiz_completed:
-                    if 50 <= x <= 750:
-                        for idx in range(len(questions[current_question][1])):
-                            if 150 + idx * 50 <= y <= 150 + (idx + 1) * 50:
-                                if check_answer(questions[current_question], idx):
-                                    result_text = "Correct!"
-                                else:
-                                    result_text = "Wrong answer."
+                if 50 <= x <= 750:
+                    for idx in range(len(answers)):
+                        if 150 + idx * 50 <= y <= 150 + (idx + 1) * 50:
+                            if idx == correct_index:
+                                result_text = "Correct!"
+                                feedback_color = (0, 255, 0)  # Green color for correct
+                            else:
+                                result_text = "Wrong answer."
+                                feedback_color = (255, 0, 0)  # Red color for wrong
 
-                                current_question += 1
-                                if current_question >= len(questions):
-                                    quiz_completed = True
-                                break
-                else:
-                    if 350 <= x <= 450 and 350 <= y <= 400:
-                        screen.fill(BLACK)
-                        pygame.display.flip()
-                        pygame.time.wait(2000)  # Wait for 2 seconds
-                        running = False
+                            current_question += 1
+                            break
 
-        if not quiz_completed:
-            if current_question < len(questions):
-                display_question(questions[current_question])
-        else:
-            display_end_screen()
-        draw_back_button()
+        # Check if quiz is completed
+        if current_question >= len(questions):
+            screen.fill((0, 0, 0))
+            draw_text("Quiz Completed!", (325,313))
+            pygame.display.flip()
+            pygame.time.wait(2000)  # Wait for 2 seconds
+            quiz_done()
+            drive_car_rect.x = 20
+            drive_car_rect.y = 480
+            return  # Exit the function to return to the roadmap
 
         pygame.display.flip()
 
 def true_false_quiz_v2():
-    global screen
+    global screen, page, quiz_completed_count
     screen = pygame.display.set_mode((screen_width, screen_height))
-    pygame.display.set_caption("True or False Game - Safety and Cost")
+    pygame.display.set_caption("True or False Game v2")
 
     # Load font
     font = pygame.font.SysFont(None, 32)
 
     # Questions and answers
     questions = [
-        "Self-driving cars aim to eliminate human error in driving.",
-        "Self-driving cars perform equally well in all weather conditions.",
-        "The cost of AVs is not a barrier to their widespread adoption.",
-        "Consumers are showing willingness to pay for advanced autonomous functions.",
-        "AVs could allow passengers to use travel time for leisure or work."
+        "LiDAR stands for Light Detection and Ranging.",
+        "Waymo is owned by Tesla Motors.",
+        "Tesla's Autopilot feature allows for fully autonomous driving."
     ]
-    answers = [True, False, False, True, True]  # True = 'True', False = 'False'
+    answers = [True, False, False]  # True = 'True', False = 'False'
 
     # Variables
     current_question = 0
     feedback = ""
+    feedback_color = (255, 255, 255)  # Default color is white
 
     # Main loop
     while True:
@@ -887,7 +882,7 @@ def true_false_quiz_v2():
         screen.blit(question_text, (50, 50))
 
         # Display feedback
-        feedback_text = font.render(feedback, True, (255, 255, 255))
+        feedback_text = font.render(feedback, True, feedback_color)
         screen.blit(feedback_text, (50, 150))
 
         # Display True/False buttons
@@ -914,25 +909,51 @@ def true_false_quiz_v2():
                 if 50 <= x <= 150 and 200 <= y <= 250:  # True button
                     if answers[current_question] == True:
                         feedback = "Correct!"
+                        feedback_color = (0, 255, 0)  # Green color for correct
                     else:
                         feedback = "Wrong!"
+                        feedback_color = (255, 0, 0)  # Red color for wrong
                 elif 200 <= x <= 300 and 200 <= y <= 250:  # False button
                     if answers[current_question] == False:
                         feedback = "Correct!"
+                        feedback_color = (0, 255, 0)  # Green color for correct
                     else:
                         feedback = "Wrong!"
+                        feedback_color = (255, 0, 0)  # Red color for wrong
                 elif 650 <= x <= 750 and 500 <= y <= 550:  # Next button
                     current_question += 1
                     if current_question >= len(questions):
-                        current_question = 0
+                        quiz_done()
+                        drive_car_rect.x = 20
+                        drive_car_rect.y = 480
+                        return  # Exit the function to return to roadmap
                     feedback = ""
-        draw_back_button()
+                    feedback_color = (255, 255, 255)  # Reset color to white
+
         pygame.display.flip()
 
-def quiz_completed():
-    global page, quiz_completed_count
-    quiz_completed_count += 1
-    page = 4  # Return to roadmap
+def end():
+    pygame.display.set_caption('YOU WON!!')
+    bg = pygame.image.load('end.png')
+    screen.blit(bg, (0, 0))
+    
+    # Render text "NEW EV!!" with a black outline
+    my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 125)
+    
+    # Create a surface for the text with alpha transparency to draw the outline
+    text_surface = my_font.render('NEW EV!!', True, (0, 0, 0))  
+    text_rect = text_surface.get_rect(center=(400, 124))
+    
+    # Draw the outline: render the text shifted in each diagonal direction
+    outline_thickness = 3
+    screen.blit(text_surface, (text_rect.x - outline_thickness, text_rect.y))
+    screen.blit(text_surface, (text_rect.x + outline_thickness, text_rect.y))
+    screen.blit(text_surface, (text_rect.x, text_rect.y - outline_thickness))
+    screen.blit(text_surface, (text_rect.x, text_rect.y + outline_thickness))
+    
+    # Render the main text in white in the center
+    text_surface = my_font.render('NEW EV!!', True, (7,248,3))  
+    screen.blit(text_surface, text_rect)
 
 while True:
     clock.tick(60)
@@ -945,9 +966,8 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             x = event.pos[0]
             y = event.pos[1]
-            print(x,y)
 
-            if page == 7 or page == 6 or page == 5:
+            if page == 7 or page == 6 or page == 5 or page == 8 or page == 9 or page == 10:
                 if 675 < x < 750 and 25 < y < 75:
                     page = 4  # Go back to roadmap
                     drive_car_rect.x = 20
@@ -1032,5 +1052,9 @@ while True:
         true_false_quiz_v2()
     elif page == 16:
         multiple_choice_quiz_v2()
+    elif page == 99:
+        end()
 
-    pygame.display.flip()
+    if quiz_completed_count == 6:
+        page = 99
+        pygame.display.flip()

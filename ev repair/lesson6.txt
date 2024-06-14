@@ -1,0 +1,9 @@
+Safety Enhancements and Challenges:
+Self-driving cars aim to significantly improve road safety by eliminating human error.
+EV safety requires comparing their non-collision rates with human drivers under various conditions.
+EVs perform well in tasks like lane-keeping and maintaining safe distances.
+Cost and Convenience:
+High costs of sensors and computing components are a barrier to widespread EV adoption.
+Consumers are willing to pay for autonomous functions due to benefits such as increased productivity.
+EVs could transform mobility by allowing passengers to use travel time for leisure or work.
+By 2030, shared autonomous EV's could become the most cost-effective and convenient transportation.

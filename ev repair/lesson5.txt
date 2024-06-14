@@ -1,0 +1,5 @@
+Electric cars offer numerous safety advantages compared to traditional vehicles. 
+Firstly, they significantly reduce the likelihood of accidents by eliminating human error from driving. 
+Additionally, self-driving cars can mitigate the risk of drunk driving, as the vehicle handles all 
+driving tasks autonomously. 
+However, there are some safety concerns, such as the potential for hacking and data leaks.

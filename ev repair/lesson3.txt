@@ -1,0 +1,9 @@
+Ethics of Self-Driving Cars
+One of the biggest ethical concerns about self driving cars revolves around the decision making. 
+Most accidents are caused by human error, but with self-driving cars, how will they make decisions
+in those moments? 
+Manufacturers also need to make sure that there is no bias in the decision making system. 
+Another question is who is liable in an accident, is it the owner of the car or is it the 
+manufacturer of the car. 
+Another big concern people have is the possibility of taking people's jobs. 
+Ethically speaking self driving is more accessible especially with people who may have a disability. 

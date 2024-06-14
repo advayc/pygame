@@ -1,0 +1,6 @@
+Self driving cars use many different technologies in combination to be able to sense and react to their surroundings. 
+The types of hardware that self driving cars use include cameras to be able to see everything.
+Radar to detect speed of objects lasers to create a 3d map of your surroundings and ultrasonic sensors.
+Self driving cars also use many different types of software. 
+GPS is a very important software that they use, allowing the cars to navigate from one location to another. 
+Self driving cars use algorithms to be able to recognize foreign objects such as people on the road and road signs. 
