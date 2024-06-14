@@ -49,8 +49,268 @@ transition_complete = False
 
 # Instruction Audio
 audio_playing = False
-
 quiz_completed_count = 0  # Initialize the quiz completion counter
+
+# Instruction Audio
+lesson1_sound = pygame.mixer.Sound("lesson1.mp3")
+lesson2_sound = pygame.mixer.Sound("lesson2.mp3")
+lesson3_sound = pygame.mixer.Sound("lesson3.mp3")
+lesson4_sound = pygame.mixer.Sound("lesson4.mp3")
+lesson5_sound = pygame.mixer.Sound("lesson5.mp3")
+lesson6_sound = pygame.mixer.Sound("lesson6.mp3")
+audio_playing = False
+
+def lesson1():
+    global page
+
+    screen.fill((205, 205, 205))
+    instruct_bg = pygame.image.load("instruct_bg.jpg")
+    instruct = pygame.transform.scale(instruct_bg, (800, 600))
+    instruct.set_alpha(15)
+    screen.blit(instruct, (0,0))
+    my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 45)
+    text = my_font.render('What are Self Driving Cars?', True, (0, 0, 0))
+    text_rect = text.get_rect(center=(300, 40))
+    screen.blit(text, text_rect)
+    
+    diff_font = pygame.font.Font('FrancoisOne-Regular.ttf', 20)
+    speaker = pygame.image.load("speaker.png")
+    speaker = pygame.transform.scale(speaker, (80, 80))
+    speaker_rect = speaker.get_rect(center=(710, 40))
+    screen.blit(speaker, speaker_rect)
+    a_font = pygame.font.SysFont('Georgia', 15)
+    content = open("lesson1.txt", "r")
+    instructions_lines = content.readlines()
+    
+    for i, line in enumerate(instructions_lines):
+        line = line.strip()
+        line_text = a_font.render(line, True, (0, 0, 0))
+        line_rect = line_text.get_rect(topleft=(20, 100 + i * 50))
+        screen.blit(line_text, line_rect)
+    content.close()
+    
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 40)
+    lab = f.render('NEXT', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 525))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('NEXT', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+            
+    pygame.draw.circle(screen, (90, 90, 90), (700, 525), 50)
+    screen.blit(lab, lab_rect)
+
+    pygame.display.flip()
+    
+def lesson2():
+    global page
+
+    screen.fill((205, 205, 205))
+    instruct_bg = pygame.image.load("instruct_bg.jpg")
+    instruct = pygame.transform.scale(instruct_bg, (800, 600))
+    instruct.set_alpha(15)
+    screen.blit(instruct, (0,0))
+    my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 45)
+    text = my_font.render('How do Self Driving Cars work?', True, (0, 0, 0))
+    text_rect = text.get_rect(center=(300, 40))
+    screen.blit(text, text_rect)
+    
+    diff_font = pygame.font.Font('FrancoisOne-Regular.ttf', 20)
+    speaker = pygame.image.load("speaker.png")
+    speaker = pygame.transform.scale(speaker, (80, 80))
+    speaker_rect = speaker.get_rect(center=(710, 40))
+    screen.blit(speaker, speaker_rect)
+    a_font = pygame.font.SysFont('Georgia', 15)
+    content = open("lesson2.txt", "r")
+    instructions_lines = content.readlines()
+    
+    for i, line in enumerate(instructions_lines):
+        line = line.strip()
+        line_text = a_font.render(line, True, (0, 0, 0))
+        line_rect = line_text.get_rect(topleft=(20, 100 + i * 50))
+        screen.blit(line_text, line_rect)
+    content.close()
+    
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 40)
+    lab = f.render('NEXT', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 525))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('NEXT', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+            
+    pygame.draw.circle(screen, (90, 90, 90), (700, 525), 50)
+    screen.blit(lab, lab_rect)
+
+    pygame.display.flip()
+    
+def lesson3():
+    global page
+
+    screen.fill((205, 205, 205))
+    instruct_bg = pygame.image.load("instruct_bg.jpg")
+    instruct = pygame.transform.scale(instruct_bg, (800, 600))
+    instruct.set_alpha(15)
+    screen.blit(instruct, (0,0))
+    my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 45)
+    text = my_font.render('Ethics of Self-Driving Cars', True, (0, 0, 0))
+    text_rect = text.get_rect(center=(300, 40))
+    screen.blit(text, text_rect)
+    
+    diff_font = pygame.font.Font('FrancoisOne-Regular.ttf', 20)
+    speaker = pygame.image.load("speaker.png")
+    speaker = pygame.transform.scale(speaker, (80, 80))
+    speaker_rect = speaker.get_rect(center=(710, 40))
+    screen.blit(speaker, speaker_rect)
+    a_font = pygame.font.SysFont('Georgia', 15)
+    content = open("lesson3.txt", "r")
+    instructions_lines = content.readlines()
+    
+    for i, line in enumerate(instructions_lines):
+        line = line.strip()
+        line_text = a_font.render(line, True, (0, 0, 0))
+        line_rect = line_text.get_rect(topleft=(20, 100 + i * 50))
+        screen.blit(line_text, line_rect)
+    content.close()
+    
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 40)
+    lab = f.render('NEXT', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 525))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('NEXT', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+            
+    pygame.draw.circle(screen, (90, 90, 90), (700, 525), 50)
+    screen.blit(lab, lab_rect)
+
+    pygame.display.flip()
+    
+def lesson4():
+    global page
+
+    screen.fill((205, 205, 205))
+    instruct_bg = pygame.image.load("instruct_bg.jpg")
+    instruct = pygame.transform.scale(instruct_bg, (800, 600))
+    instruct.set_alpha(15)
+    screen.blit(instruct, (0,0))
+    my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 45)
+    text = my_font.render('The future', True, (0, 0, 0))
+    text_rect = text.get_rect(center=(300, 40))
+    screen.blit(text, text_rect)
+    
+    diff_font = pygame.font.Font('FrancoisOne-Regular.ttf', 20)
+    speaker = pygame.image.load("speaker.png")
+    speaker = pygame.transform.scale(speaker, (80, 80))
+    speaker_rect = speaker.get_rect(center=(710, 40))
+    screen.blit(speaker, speaker_rect)
+    a_font = pygame.font.SysFont('Georgia', 15)
+    content = open("lesson4.txt", "r")
+    instructions_lines = content.readlines()
+    
+    for i, line in enumerate(instructions_lines):
+        line = line.strip()
+        line_text = a_font.render(line, True, (0, 0, 0))
+        line_rect = line_text.get_rect(topleft=(20, 100 + i * 50))
+        screen.blit(line_text, line_rect)
+    content.close()
+    
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 40)
+    lab = f.render('NEXT', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 525))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('NEXT', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+            
+    pygame.draw.circle(screen, (90, 90, 90), (700, 525), 50)
+    screen.blit(lab, lab_rect)
+
+    pygame.display.flip()
+
+def lesson5():
+    global page
+
+    screen.fill((205, 205, 205))
+    instruct_bg = pygame.image.load("instruct_bg.jpg")
+    instruct = pygame.transform.scale(instruct_bg, (800, 600))
+    instruct.set_alpha(15)
+    screen.blit(instruct, (0,0))
+    my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 45)
+    text = my_font.render('Safety', True, (0, 0, 0))
+    text_rect = text.get_rect(center=(300, 40))
+    screen.blit(text, text_rect)
+    
+    diff_font = pygame.font.Font('FrancoisOne-Regular.ttf', 20)
+    speaker = pygame.image.load("speaker.png")
+    speaker = pygame.transform.scale(speaker, (80, 80))
+    speaker_rect = speaker.get_rect(center=(710, 40))
+    screen.blit(speaker, speaker_rect)
+    a_font = pygame.font.SysFont('Georgia', 15)
+    content = open("lesson5.txt", "r")
+    instructions_lines = content.readlines()
+    
+    for i, line in enumerate(instructions_lines):
+        line = line.strip()
+        line_text = a_font.render(line, True, (0, 0, 0))
+        line_rect = line_text.get_rect(topleft=(20, 100 + i * 50))
+        screen.blit(line_text, line_rect)
+    content.close()
+    
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 40)
+    lab = f.render('NEXT', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 525))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('NEXT', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+            
+    pygame.draw.circle(screen, (90, 90, 90), (700, 525), 50)
+    screen.blit(lab, lab_rect)
+
+    pygame.display.flip()
+    
+def lesson6():
+    global page
+
+    screen.fill((205, 205, 205))
+    instruct_bg = pygame.image.load("instruct_bg.jpg")
+    instruct = pygame.transform.scale(instruct_bg, (800, 600))
+    instruct.set_alpha(15)
+    screen.blit(instruct, (0,0))
+    my_font = pygame.font.Font('FrancoisOne-Regular.ttf', 45)
+    text = my_font.render('Safety Enhancements and Challenges', True, (0, 0, 0))
+    text_rect = text.get_rect(center=(300, 40))
+    screen.blit(text, text_rect)
+    
+    diff_font = pygame.font.Font('FrancoisOne-Regular.ttf', 20)
+    speaker = pygame.image.load("speaker.png")
+    speaker = pygame.transform.scale(speaker, (80, 80))
+    speaker_rect = speaker.get_rect(center=(710, 40))
+    screen.blit(speaker, speaker_rect)
+    a_font = pygame.font.SysFont('Georgia', 15)
+    content = open("lesson6.txt", "r")
+    instructions_lines = content.readlines()
+    
+    for i, line in enumerate(instructions_lines):
+        line = line.strip()
+        line_text = a_font.render(line, True, (0, 0, 0))
+        line_rect = line_text.get_rect(topleft=(20, 100 + i * 50))
+        screen.blit(line_text, line_rect)
+    content.close()
+    
+    f = pygame.font.Font("FrancoisOne-Regular.ttf", 40)
+    lab = f.render('NEXT', True, (255, 255, 255))
+    lab_rect = lab.get_rect(center=(700, 525))
+
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            screen.blit(f.render('NEXT', True, (0, 0, 0)), (lab_rect.x + x, lab_rect.y + y))
+            
+    pygame.draw.circle(screen, (90, 90, 90), (700, 525), 50)
+    screen.blit(lab, lab_rect)
+
+    pygame.display.flip()
 
 def draw_back_button():
     f = pygame.font.Font("FrancoisOne-Regular.ttf", 15)
@@ -247,7 +507,7 @@ def track1():
     draw_back_button()
 
     if abs(drive_car_rect[0] - info_ev_center[0]) <= 50 and abs(drive_car_rect[1] - info_ev_center[1]) <= 50:
-        print('info')
+        page=17 # go lesson 1
     elif abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
         page = 11  # Go to quiz 1
 
@@ -283,7 +543,7 @@ def track2():
     draw_back_button()
 
     if abs(drive_car_rect[0] - info_ev_center[0]) <= 50 and abs(drive_car_rect[1] - info_ev_center[1]) <= 50:
-        print("info")
+        page=18 # go lesson 2
     elif abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
         page = 12  # Go to quiz 2
 
@@ -319,7 +579,7 @@ def track3():
     draw_back_button()
 
     if abs(drive_car_rect[0] - info_ev_center[0]) <= 50 and abs(drive_car_rect[1] - info_ev_center[1]) <= 50:
-        print("info")
+        page=19 # go lesson 3
     elif abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
         page = 13  # Go to quiz 3
 
@@ -355,7 +615,7 @@ def track22():
     draw_back_button()
 
     if abs(drive_car_rect[0] - info_ev_center[0]) <= 50 and abs(drive_car_rect[1] - info_ev_center[1]) <= 50:
-        print("info")
+        page=20 # go lesson 4
     elif abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
         page = 14  # Go to quiz 4
 
@@ -391,7 +651,7 @@ def track33():
     draw_back_button()
 
     if abs(drive_car_rect[0] - info_ev_center[0]) <= 50 and abs(drive_car_rect[1] - info_ev_center[1]) <= 50:
-        print("info")
+        page=21 # go lesson 5
     elif abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
         page = 15  # Go to quiz 5
 
@@ -424,7 +684,7 @@ def track11():
     draw_back_button()
 
     if abs(drive_car_rect[0] - info_ev_center[0]) <= 50 and abs(drive_car_rect[1] - info_ev_center[1]) <= 50:
-        print('info')
+        page=22 # go lesson 6
     elif abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
         page = 16  # Go to quiz 6
 
@@ -613,11 +873,11 @@ def fill_blanks_quiz():
 
     # Define the sentences and their answers
     questions = [
-        "Advanced sensors  enable _____________ cars to navigate roads independently.",
+        "Self-driving cars use advanced sensors to enable _____________ navigation.",
         "Many self-driving cars are _____________ to align with sustainability goals.",
-        "Continuous evolution of ______________ is necessary for self-driving technology."
+        "Continuous evolution of ______________ is necessary for the reliability of self-driving technology."
     ]
-    answers = ["self-driving", "electric", "regulation"]
+    answers = ["autonomous", "electric", "software"]
 
     # Load check and cross images 
     check_img = pygame.image.load("check.png")
@@ -783,18 +1043,26 @@ def multiple_choice_quiz_v2():
 
     # Questions and answers
     questions = [
-        ("Which company is known for developing Waymo, a self-driving technology?",
-         ["A. Tesla",
-          "B. Google",
-          "C. Apple",
-          "D. Amazon"],
-         1),  # Index of the correct answer in the answers list
-        ("What is an component in LiDAR technology used in self-driving cars?",
+        ("What technology do self-driving cars primarily use to sense their surroundings?",
          ["A. Cameras",
           "B. Radar",
-          "C. Light",
-          "D. Sound waves"],
-         2)   # Index of the correct answer in the answers list
+          "C. GPS",
+          "D. Sonar"],
+         1),  # Index of the correct answer in the answers list
+
+        ("Which of the following is a key sensor technology used by self-driving cars?",
+         ["A. Lidar",
+          "B. Microphone",
+          "C. Barometer",
+          "D. Compass"],
+         0),  # Index of the correct answer in the answers list
+
+        ("Self-driving cars require continuous updates to their ___________ to function effectively.",
+         ["A. Software",
+          "B. Hardware",
+          "C. Firmware",
+          "D. Antennas"],
+         0)   # Index of the correct answer in the answers list
     ]
 
     # Variables
@@ -862,11 +1130,11 @@ def true_false_quiz_v2():
 
     # Questions and answers
     questions = [
-        "LiDAR stands for Light Detection and Ranging.",
-        "Waymo is owned by Tesla Motors.",
-        "Tesla's Autopilot feature allows for fully autonomous driving."
+        "Self-driving cars use cameras to be able to see everything.",
+        "Self-driving cars are fully autonomous and do not require any human intervention.",
+        "Self-driving cars use radar to detect objects."
     ]
-    answers = [True, False, False]  # True = 'True', False = 'False'
+    answers = [True, False, True]  # True = 'True', False = 'False'
 
     # Variables
     current_question = 0
@@ -966,17 +1234,48 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             x = event.pos[0]
             y = event.pos[1]
+            print(x,y)
 
             if page == 7 or page == 6 or page == 5 or page == 8 or page == 9 or page == 10:
                 if 675 < x < 750 and 25 < y < 75:
                     page = 4  # Go back to roadmap
                     drive_car_rect.x = 20
                     drive_car_rect.y = 210
+            elif page == 3:
+                if 645 < x < 755 and 470 < y < 570:
+                    page = 2  # Go back to welcome screen
+            elif page == 17:  
+                if 675 < x < 750 and 470 < y < 570:  
+                    page = 5
+                    drive_car_rect.x = 372
+                    drive_car_rect.y = 461
+            elif page == 18:  
+                if 675 < x < 750 and 470 < y < 570:  
+                    page = 6
+                    drive_car_rect.x = 253
+                    drive_car_rect.y = 366
+            elif page == 19:  
+                if 675 < x < 750 and 470 < y < 570:  
+                    page = 7
+                    drive_car_rect.x = 305
+                    drive_car_rect.y = 428
+            elif page == 20:  
+                if 675 < x < 750 and 470 < y < 570:  
+                    page = 8
+                    drive_car_rect.x = 372
+                    drive_car_rect.y = 461
+            elif page == 21:  
+                if 675 < x < 750 and 470 < y < 570:  
+                    page = 9
+                    drive_car_rect.x = 253
+                    drive_car_rect.y = 366
+            elif page == 22:  
+                if 675 < x < 750 and 470 < y < 570:  
+                    page = 10
+                    drive_car_rect.x = 305
+                    drive_car_rect.y = 428
 
-            elif page == 3 and 675 < x < 750 and 525 < y < 580:
-                page = 2  # Go back to welcome screen
-
-            elif page == 2:
+            if page == 2:
                 if 50 < x < 300 and 350 < y < 450:
                     page = 4  # Start button
                 elif 350 < x < 770 and 350 < y < 450:
@@ -998,10 +1297,34 @@ while True:
                 elif 530 < x < 680 and 370 < y < 519:
                     page = 10  # Charger
 
-            elif page == 3 and 650 < x < 810 and 10 < y < 90:
-                if not audio_playing:
-                    instruction_sound.play()
-                    audio_playing = True
+            if page == 3 and 650 < x < 810 and 10 < y < 90:
+                instruction_sound.play()
+                audio_playing = True
+
+            if page == 17 and 650 < x < 810 and 10 < y < 90:
+                lesson1_sound.play()
+                audio_playing = True
+            
+            if page == 18 and 650 < x < 810 and 10 < y < 90:
+                lesson2_sound.play()
+                audio_playing = True
+
+            if page == 19 and 650 < x < 810 and 10 < y < 90:
+                lesson3_sound.play()
+                audio_playing = True
+
+            if page == 20 and 650 < x < 810 and 10 < y < 90:
+                lesson4_sound.play()
+                audio_playing = True
+
+            if page == 21 and 650 < x < 810 and 10 < y < 90:
+                lesson5_sound.play()
+                audio_playing = True
+
+            if page == 22 and 650 < x < 810 and 10 < y < 90:
+                lesson6_sound.play()
+                audio_playing = True
+
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP]:
@@ -1052,6 +1375,18 @@ while True:
         true_false_quiz_v2()
     elif page == 16:
         multiple_choice_quiz_v2()
+    elif page == 17:
+        lesson1()
+    elif page == 18:
+        lesson2()
+    elif page == 19:
+        lesson3()
+    elif page == 20:
+        lesson4()
+    elif page == 21:
+        lesson5()
+    elif page == 21:
+        lesson6()
     elif page == 99:
         end()
 
