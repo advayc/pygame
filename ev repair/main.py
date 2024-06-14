@@ -276,7 +276,7 @@ def track1():
        (drive_car_rect.x > 339 and drive_car_rect.y < 238) or \
        (drive_car_rect.x > 339 and drive_car_rect.x < 461 and drive_car_rect.y < 419) or \
        (drive_car_rect.x < 204 and drive_car_rect.y > 281 or drive_car_rect.x > 586 and drive_car_rect.y > 370):
-        car_rect.x, car_rect.y = 20,480
+        drive_car_rect.x, drive_car_rect.y = 20,480
 
     
     pygame.display.flip()
@@ -320,7 +320,7 @@ def track2():
     or (drive_car_rect.x > 460 and drive_car_rect.y < 210) or (drive_car_rect.x < 330 and drive_car_rect.y > 285 and drive_car_rect.y < 302)\
     or (drive_car_rect.x > 234 and drive_car_rect.x < 328 and drive_car_rect.y > 197 and drive_car_rect.y < 296)\
     or (drive_car_rect.x > 609 and drive_car_rect.y > 346):
-        car_rect.x, car_rect.y = 20,480
+        drive_car_rect.x, drive_car_rect.y = 20,480
 
     pygame.display.flip()
 
@@ -366,7 +366,7 @@ def track3():
     or (drive_car_rect.y > 491) or (drive_car_rect.y < 99) or (drive_car_rect.x > 250 and drive_car_rect.x < 460 and drive_car_rect.y < 377)\
     or (drive_car_rect.x > 250 and drive_car_rect.x <598 and drive_car_rect.y < 210) or (drive_car_rect.x > 588 and drive_car_rect.y > 344)\
     or (drive_car_rect.x > 720 and drive_car_rect.y > 231):
-        car_rect.x, car_rect.y = 20,480
+        drive_car_rect.x, drive_car_rect.y = 20,480
 
     pygame.display.flip()
 
