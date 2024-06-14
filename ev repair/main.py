@@ -1334,7 +1334,7 @@ while True:
     if keys[pygame.K_LEFT]:
         drive_car_rect.x -= 2.5
     if keys[pygame.K_RIGHT]:
-        bg_sound.play(-1)
+        drive_car_rect.x += 2.5
 
     screen.blit(drive_car, drive_car_rect)
 
