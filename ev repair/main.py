@@ -339,7 +339,7 @@ def loading():
             crash.play()
             crash_sound_played = True
             bg_sound.stop()
-
+    
     text.set_alpha(text_alpha)
     loading_bg = pygame.image.load("orange.png")
     bg_scale = pygame.transform.scale(loading_bg, (850, 650))
@@ -686,7 +686,7 @@ def track11():
     if abs(drive_car_rect[0] - info_ev_center[0]) <= 50 and abs(drive_car_rect[1] - info_ev_center[1]) <= 50:
         page=22 # go lesson 6
     elif abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
-        page = 16  # Go to quiz 6
+        page = 16  # Go to quiz 6       
 
     if (drive_car_rect.y < 170 or drive_car_rect.y > 512) or \
        (drive_car_rect.x > 339 and drive_car_rect.y < 238) or \
@@ -1334,7 +1334,7 @@ while True:
     if keys[pygame.K_LEFT]:
         drive_car_rect.x -= 2.5
     if keys[pygame.K_RIGHT]:
-        drive_car_rect.x += 2.5
+        bg_sound.play(-1)
 
     screen.blit(drive_car, drive_car_rect)
 
