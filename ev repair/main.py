@@ -488,7 +488,7 @@ def roadmap():
     
 def track1():
     global drive_car_rect, page
-    
+
     screen.fill((0, 0, 0))
     track1back = pygame.image.load("track1back.png").convert()
     screen.blit(track1back, (0, 0))
@@ -543,9 +543,9 @@ def track2():
     draw_back_button()
 
     if abs(drive_car_rect[0] - info_ev_center[0]) <= 50 and abs(drive_car_rect[1] - info_ev_center[1]) <= 50:
-        page=18 # go lesson 2
+        page=18 # go lesson 
     elif abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
-        page = 12  # Go to quiz 2
+        page = 12  # Go to quiz 
 
     if (drive_car_rect.y < 85 or drive_car_rect.y > 508) or (drive_car_rect.x < 122 and drive_car_rect.y < 170)\
     or (drive_car_rect.x > 460 and drive_car_rect.y < 210) or (drive_car_rect.x < 330 and drive_car_rect.y > 285 and drive_car_rect.y < 302)\
@@ -665,7 +665,7 @@ def track33():
 
 def track11():
     global drive_car_rect, page
-    
+
     screen.fill((0, 0, 0))
     track1back = pygame.image.load("track1back.png").convert()
     screen.blit(track1back, (0, 0))
@@ -684,9 +684,9 @@ def track11():
     draw_back_button()
 
     if abs(drive_car_rect[0] - info_ev_center[0]) <= 50 and abs(drive_car_rect[1] - info_ev_center[1]) <= 50:
-        page=22 # go lesson 6
+        page=21 # go lesson 1
     elif abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
-        page = 16  # Go to quiz 6       
+        page = 16  # Go to quiz 1
 
     if (drive_car_rect.y < 170 or drive_car_rect.y > 512) or \
        (drive_car_rect.x > 339 and drive_car_rect.y < 238) or \
@@ -1252,13 +1252,14 @@ while True:
             elif page == 18:  
                 if 675 < x < 750 and 470 < y < 570:  
                     page = 6
-                    drive_car_rect.x = 253
-                    drive_car_rect.y = 366
+                    drive_car_rect.x = 376
+                    drive_car_rect.y = 357
             elif page == 19:  
                 if 675 < x < 750 and 470 < y < 570:  
                     page = 7
-                    drive_car_rect.x = 305
-                    drive_car_rect.y = 428
+                    drive_car_rect.x = 376
+                    drive_car_rect.y = 353
+                    # 2, 3, 1
             elif page == 20:  
                 if 675 < x < 750 and 470 < y < 570:  
                     page = 8
@@ -1267,8 +1268,8 @@ while True:
             elif page == 21:  
                 if 675 < x < 750 and 470 < y < 570:  
                     page = 9
-                    drive_car_rect.x = 253
-                    drive_car_rect.y = 366
+                    drive_car_rect.x = 279
+                    drive_car_rect.y = 419
             elif page == 22:  
                 if 675 < x < 750 and 470 < y < 570:  
                     page = 10
