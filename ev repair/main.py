@@ -271,10 +271,13 @@ def track1():
         print('info')
     elif abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50:
         print('quiz')
-
     # Check if the car is off the track
-    if not drive_car_rect.colliderect(face):
-        print('The car is off the track!')
+    if (drive_car_rect.y < 170 or drive_car_rect.y > 512) or \
+       (drive_car_rect.x > 339 and drive_car_rect.y < 238) or \
+       (drive_car_rect.x > 339 and drive_car_rect.x < 461 and drive_car_rect.y < 419) or \
+       (drive_car_rect.x < 204 and drive_car_rect.y > 281 or drive_car_rect.x > 586 and drive_car_rect.y > 370):
+        car_rect.x, car_rect.y = 20,480
+
     
     pygame.display.flip()
 
@@ -312,6 +315,12 @@ def track2():
     elif (abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and
           abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50):
         print("quiz")
+
+    if (drive_car_rect.y < 85 or drive_car_rect.y > 508) or (drive_car_rect.x < 122 and drive_car_rect.y < 170)\
+    or (drive_car_rect.x > 460 and drive_car_rect.y < 210) or (drive_car_rect.x < 330 and drive_car_rect.y > 285 and drive_car_rect.y < 302)\
+    or (drive_car_rect.x > 234 and drive_car_rect.x < 328 and drive_car_rect.y > 197 and drive_car_rect.y < 296)\
+    or (drive_car_rect.x > 609 and drive_car_rect.y > 346):
+        car_rect.x, car_rect.y = 20,480
 
     pygame.display.flip()
 
@@ -352,6 +361,12 @@ def track3():
     elif (abs(drive_car_rect[0] - quiz_ev_center[0]) <= 50 and
           abs(drive_car_rect[1] - quiz_ev_center[1]) <= 50):
         print("quiz")
+
+    if (drive_car_rect.x < 598 and drive_car_rect.y < 174) or (drive_car_rect.x < 103 and drive_car_rect.y > 283)\
+    or (drive_car_rect.y > 491) or (drive_car_rect.y < 99) or (drive_car_rect.x > 250 and drive_car_rect.x < 460 and drive_car_rect.y < 377)\
+    or (drive_car_rect.x > 250 and drive_car_rect.x <598 and drive_car_rect.y < 210) or (drive_car_rect.x > 588 and drive_car_rect.y > 344)\
+    or (drive_car_rect.x > 720 and drive_car_rect.y > 231):
+        car_rect.x, car_rect.y = 20,480
 
     pygame.display.flip()
 
